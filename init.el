@@ -137,8 +137,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Monaco for Powerline"
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -317,7 +317,7 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "m") 'evil-emacs-state)
   (define-key evil-normal-state-map (kbd "C-n") 'evil-emacs-state)
   (define-key evil-normal-state-map (kbd "C-p") 'evil-emacs-state)
-  (define-key evil-emacs-state-map "" 'evil-normal-state)
+  (global-set-key (kbd "M-SPC") 'evil-normal-state)
   ;; Ignore hidden files in "counsel find file" default, these files will appear unless we input "."
   (setq counsel-find-file-ignore-regexp "\\`\\.")
   ;; Use the input to replace the selected region.
