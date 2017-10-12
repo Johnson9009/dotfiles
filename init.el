@@ -340,6 +340,9 @@ you should place your code here."
   ;; Copy to or paste from system clipboard when spacemacs is running in terminal.
   (xclip-mode 1)
   (turn-on-xclip)
+  ;; GUI emacs use wave as the separator, on Mac the separators are less saturated than the rest of the spaceline.
+  ;; Using utf-8 separator makes it go away completely without the need to change color space.
+  (setq powerline-default-separator 'utf-8)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
