@@ -1,0 +1,16 @@
+~/.spacemacs.d -> spacemacs.d
+~/.tmux.conf -> tmux/tmux.conf
+~/.vim -> vim
+~/.gdbinit -> gdb/gdbinit
+~/.zshrc -> zsh/zshrc
+
+bin/emacsx ->
+bin/emacsclient ->
+
+bin/python2 ->
+bin/python3 ->
+bin/python -> bin/python3
+bin/pip -> bin/pip3
+bin/ipython -> bin/ipython3
+bin/ipdb -> bin/ipdb3
+
