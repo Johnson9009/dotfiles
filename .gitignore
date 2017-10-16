@@ -9,5 +9,6 @@ bin/**
 !bin/ipdb2
 !bin/ipdb3
 !bin/pdb.ipy
+!bin/setup.py
 
 
