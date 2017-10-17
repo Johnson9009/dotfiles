@@ -353,7 +353,18 @@ you should place your code here."
   (setq evil-motion-state-cursor '("plum3" bar))
   ;; Setting the highlight background of current line to black, this make selected region become more distinct.
   (set-face-background 'hl-line "#000000")
-  )
+  ;; Save the current user buffer automatically when exit the evil emacs state.
+  (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer))
+
+
+;; User defined functions.
+
+;; Save user's current buffer if there are any changes.
+(defun save-user-current-buffer ()
+  "Only care about the user's buffer, all the internal buffers will be ignored."
+  (interactive)
+  (if (not (string-match-p "^\*" (buffer-name)))
+      (save-buffer)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
