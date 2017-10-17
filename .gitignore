@@ -11,4 +11,6 @@ bin/**
 !bin/pdb.ipy
 !bin/setup.py
 
-
+vim/**
+!vim/vimrc
+!vim/colors/monokai.vim
