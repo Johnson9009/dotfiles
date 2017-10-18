@@ -1,0 +1,15 @@
+source ~/.alias.csh
+
+# Do nothing if we are already in tmux, otherwise prompt to replace current shell
+# itself with tmux or not, any string headed by "Y" or "y" will be regarded as
+# "yes", in addition press "Enter" key directly also is regarded as "yes".
+if ($?TMUX) then
+else
+    echo -n "Would you like to launch tmux? [y/n]: "
+    set line = $<
+    if ($line =~ Y* || $line =~ y* || $line == "") then
+        exec tmux
+    else
+        clear
+    endif
+endif

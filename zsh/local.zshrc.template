@@ -1,0 +1,16 @@
+source ~/.alias.zsh
+
+# Do nothing if we are already in tmux, otherwise prompt to replace current shell
+# itself with tmux or not, any string headed by "Y" or "y" will be regarded as
+# "yes", in addition press "Enter" key directly also is regarded as "yes".
+if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]]; then
+    echo "Would you like to launch tmux? [y/n]: \c"
+    read line
+    if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
+        exec tmux
+    else
+        clear
+    fi
+fi
+
+
