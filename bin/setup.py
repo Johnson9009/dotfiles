@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from os import path, linesep
-from subprocess import check_call
+from subprocess import call, check_call
 
 
 dotfilesPath = path.abspath(path.dirname(path.dirname(sys.argv[0]))) + '/'
@@ -30,6 +30,9 @@ def createSymlink(symlink, target, backupSymlinks):
         cmdLine = 'mv %s %s' % (symlink, backupSymlink)
         check_call(cmdLine, shell=True)
         backupSymlinks.append((symlink, backupSymlink))
+    else:
+        cmdLine = 'mkdir -p %s' % path.dirname(symlink)
+        call(cmdLine, shell=True)
 
     cmdLine = 'ln -s %s %s' % (target, symlink)
     check_call(cmdLine, shell=True)

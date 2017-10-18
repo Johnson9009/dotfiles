@@ -1,3 +1,5 @@
 export EDITOR=em
 export TERM=xterm-256color
-export PATH=${DOTFILES}/bin:${PATH}
+if [[ ":$PATH:" != *:${DOTFILES}/bin:* ]]; then
+    export PATH=${DOTFILES}/bin:${PATH}
+fi

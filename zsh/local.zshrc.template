@@ -1,4 +1,7 @@
-source ~/.alias.zsh
+if [[ -a ~/.alias.zsh ]]
+then
+    source ~/.alias.zsh
+fi
 
 # Do nothing if we are already in tmux, otherwise prompt to replace current shell
 # itself with tmux or not, any string headed by "Y" or "y" will be regarded as
