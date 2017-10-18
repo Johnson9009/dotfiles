@@ -65,12 +65,12 @@ source $ZSH/oh-my-zsh.sh
 # Setting the full path of our dotfiles directory automatically.
 export DOTFILES=$(dirname $(dirname $(readlink ~/.zshrc)))
 
-# Stash your environment variables in ~/.local.zsh. This means they'll stay out
+# Stash your environment variables in ~/.local.zshrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -a ~/.local.zsh ]]
+if [[ -a ~/.local.zshrc ]]
 then
-    source ~/.local.zsh
+    source ~/.local.zshrc
 fi
 
 # Compilation flags
