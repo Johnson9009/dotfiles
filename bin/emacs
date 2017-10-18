@@ -1,2 +1,2 @@
 #!/bin/sh
-emacsx -nw $@
+exec emacsx -nw $@

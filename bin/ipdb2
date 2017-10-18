@@ -1,2 +1,2 @@
 #!/bin/sh
-ipython2 --pdb ${DOTFILES}/bin/pdb.ipy -- $@
+exec ipython2 --pdb ${DOTFILES}/bin/pdb.ipy -- $@

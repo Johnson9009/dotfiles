@@ -1,2 +1,2 @@
 #!/bin/sh
-python3 -m IPython $@
+exec python3 -m IPython $@
