@@ -62,31 +62,26 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Setting the full path of our dotfiles directory automatically.
-export DOTFILES=$(dirname $(dirname $(readlink ~/.zshrc)))
-
-# Stash your environment variables in ~/.local.zshrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but
-# you'll have access to them in your scripts.
-if [[ -a ~/.local.zshrc ]]
-then
-    source ~/.local.zshrc
-fi
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
+
+# Setting the full path of our dotfiles directory automatically.
+export DOTFILES=$(dirname $(dirname $(readlink ~/.zshrc)))
+
+# Load common environment variables setting such as EDITOR, PATH and so on.
 source ${DOTFILES}/env/env.zsh
+
+# Stash your local runtime configurations in ~/.local.zshrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but you'll have
+# access to them in your scripts. You can do anything you want safely, because this is
+# the last runtime configuration file current shell will load.
+if [[ -a ~/.local.zshrc ]]
+then
+    source ~/.local.zshrc
+fi

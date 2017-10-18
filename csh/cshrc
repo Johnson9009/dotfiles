@@ -1,14 +1,3 @@
-# Setting the full path of our dotfiles directory automatically.
-set DOTFILES_CSHRC_PATH = `readlink ~/.cshrc`; set DOTFILES_CSH_PATH = `dirname ${DOTFILES_CSHRC_PATH}`
-setenv DOTFILES `dirname ${DOTFILES_CSH_PATH}`
-
-# Stash your environment variables in ~/.local.cshrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but
-# you'll have access to them in your scripts.
-if (-f ~/.local.cshrc) then
-    source ~/.local.cshrc
-endif
-
 # List possibilities after an ambiguous completion.
 set autolist
 # Enable color display for the builtin ls-F and pass --color=auto to ls
@@ -20,4 +9,17 @@ setenv GREP_OPTIONS '--color=auto'
 setenv LC_CTYPE en_US.UTF-8
 setenv LC_ALL en_US.UTF-8
 
+# Setting the full path of our dotfiles directory automatically.
+set DOTFILES_CSHRC_PATH = `readlink ~/.cshrc`; set DOTFILES_CSH_PATH = `dirname ${DOTFILES_CSHRC_PATH}`
+setenv DOTFILES `dirname ${DOTFILES_CSH_PATH}`
+
+# Load common environment variables setting such as EDITOR, PATH and so on.
 source ${DOTFILES}/env/env.csh
+
+# Stash your local runtime configurations in ~/.local.cshrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but you'll have
+# access to them in your scripts. You can do anything you want safely, because this is
+# the last runtime configuration file current shell will load.
+if (-f ~/.local.cshrc) then
+    source ~/.local.cshrc
+endif
