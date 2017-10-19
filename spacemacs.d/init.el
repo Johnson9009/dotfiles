@@ -305,6 +305,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; Disable checking whether set PATH in shell runtime configuration file or not.
+  (setq exec-path-from-shell-check-startup-files nil)
   )
 
 (defun dotspacemacs/user-config ()
@@ -340,6 +342,8 @@ you should place your code here."
   ;; Copy to or paste from system clipboard when spacemacs is running in terminal.
   (xclip-mode 1)
   (turn-on-xclip)
+  ;; Save the current user buffer automatically when exit the evil emacs state.
+  (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
 
   ;; Below settings only have effects for GUI emacs.
 
@@ -353,8 +357,7 @@ you should place your code here."
   (setq evil-motion-state-cursor '("plum3" bar))
   ;; Setting the highlight background of current line to black, this make selected region become more distinct.
   (set-face-background 'hl-line "#000000")
-  ;; Save the current user buffer automatically when exit the evil emacs state.
-  (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer))
+  )
 
 
 ;; User defined functions.
