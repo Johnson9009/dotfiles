@@ -28,4 +28,5 @@ ColorSelectionUseDefault=FALSE
 ColorSelection=#56565a5a6d6d
 ScrollingBar=TERMINAL_SCROLLBAR_NONE
 ScrollingLines=5000
+CommandLoginShell=TRUE
 

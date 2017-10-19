@@ -4,9 +4,8 @@
 ~/.gdbinit -> gdb/gdbinit
 ~/.zshrc -> zsh/zshrc
 ~/.cshrc -> csh/cshrc
-~/.config/xfce4/terminal/terminalrc -> xfce4/terminal/terminalrc
-~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml -> xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-appfinder.xml -> xfce4/xfconf/xfce-perchannel-xml/xfce4-appfinder.xml
+~/.config/xfce4/terminal -> xfce4/terminal
+~/.config/xfce4/xfconf/xfce-perchannel-xml -> xfce4/xfconf/xfce-perchannel-xml
 
 bin/emacsx ->
 bin/emacsclient ->

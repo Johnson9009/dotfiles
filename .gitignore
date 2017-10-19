@@ -14,3 +14,10 @@ bin/**
 vim/**
 !vim/vimrc
 !vim/colors/monokai.vim
+
+xfce4/terminal/**
+!xfce4/terminal/terminalrc
+
+xfce4/xfconf/xfce-perchannel-xml/**
+!xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+!xfce4/xfconf/xfce-perchannel-xml/xfce4-appfinder.xml
