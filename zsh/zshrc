@@ -81,7 +81,6 @@ source ${DOTFILES}/env/env.zsh
 # of your main dotfiles repository (which may be public, like this one), but you'll have
 # access to them in your scripts. You can do anything you want safely, because this is
 # the last runtime configuration file current shell will load.
-if [[ -a ~/.local.zshrc ]]
-then
+if [[ -a ~/.local.zshrc ]]; then
     source ~/.local.zshrc
 fi

@@ -1,13 +1,14 @@
-if [[ -a ~/.alias.zsh ]]
-then
+if [[ -a ~/.alias.zsh ]]; then
     source ~/.alias.zsh
 fi
 
-# Do nothing if we are already in tmux, otherwise prompt to replace current shell
-# itself with tmux or not, any string headed by "Y" or "y" will be regarded as
-# "yes", in addition press "Enter" key directly also is regarded as "yes".
-if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]]; then
-    echo "Would you like to launch tmux? [y/n]: \c"
+# Do nothing if we are already in tmux or if current shell is not the login shell,
+# such as a shell launched in editor or a shell used to run a shell script.
+# Otherwise prompt to replace current shell itself with tmux or not, any string
+# headed by "Y" or "y" will be regarded as "yes", in addition press "Enter" key
+# directly also is regarded as "yes".
+if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]] && [[ "$-" == *m* ]] && [[ "$-" == *l* ]]; then
+    echo -n "Would you like to launch tmux? (y/n) [y]: "
     read line
     if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
         exec tmux
@@ -15,5 +16,3 @@ if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]]; then
         clear
     fi
 fi
-
-

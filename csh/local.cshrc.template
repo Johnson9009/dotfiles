@@ -2,12 +2,14 @@ if (-f ~/.alias.csh) then
     source ~/.alias.csh
 endif
 
-# Do nothing if we are already in tmux, otherwise prompt to replace current shell
-# itself with tmux or not, any string headed by "Y" or "y" will be regarded as
-# "yes", in addition press "Enter" key directly also is regarded as "yes".
-if ($?TMUX) then
+# Do nothing if we are already in tmux or if current shell is not the login shell,
+# such as a shell launched in editor or a shell used to run a shell script.
+# Otherwise prompt to replace current shell itself with tmux or not, any string
+# headed by "Y" or "y" will be regarded as "yes", in addition press "Enter" key
+# directly also is regarded as "yes".
+if ($?TMUX || $?loginsh == 0 ) then
 else
-    echo -n "Would you like to launch tmux? [y/n]: "
+    echo -n "Would you like to launch tmux? (y/n) [y]: "
     set line = $<
     if ($line =~ Y* || $line =~ y* || $line == "") then
         exec tmux
