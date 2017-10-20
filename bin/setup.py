@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from os import path, linesep
-from subprocess import call, check_call
+from subprocess import check_call
 
 
 dotfilesPath = path.abspath(path.dirname(path.dirname(sys.argv[0]))) + '/'
@@ -32,7 +32,7 @@ def createSymlink(symlink, target, backupSymlinks):
         backupSymlinks.append((symlink, backupSymlink))
     else:
         cmdLine = 'mkdir -p %s' % path.dirname(symlink)
-        call(cmdLine, shell=True)
+        check_call(cmdLine, shell=True)
 
     cmdLine = 'ln -s %s %s' % (target, symlink)
     check_call(cmdLine, shell=True)
@@ -47,6 +47,9 @@ def summary(skipedSymlinks, backupSymlinks):
         print('\nBelow symbolic links are created and original files are backup:')
         for (symlink, backupSymlink) in backupSymlinks:
             print('%s backup to %s' % (symlink, backupSymlink))
+            choice = input('Would you like to delete the backup file? (y/n) [n]: ').strip()
+            if (choice[0] is 'y' or choice[0] is 'Y'):
+                check_call('rm -rf %s' % backupSymlink, shell=True)
 
 
 with open(dotfilesPath + 'symbolics') as f:
