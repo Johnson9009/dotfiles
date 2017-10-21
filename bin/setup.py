@@ -48,7 +48,7 @@ def summary(skipedSymlinks, backupSymlinks):
         for (symlink, backupSymlink) in backupSymlinks:
             print('%s backup to %s' % (symlink, backupSymlink))
             choice = input('Would you like to delete the backup file? (y/n) [n]: ').strip()
-            if (choice[0] is 'y' or choice[0] is 'Y'):
+            if ((choice is not '') and (choice[0] is 'y' or choice[0] is 'Y')):
                 check_call('rm -rf %s' % backupSymlink, shell=True)
 
 
