@@ -1,3 +1,7 @@
+# Firstly we need to remove the exist path if it has been added, "${HOME}" should
+# be used instead of "~" in order to make "sed" work correctly.
+# setenv PATH `echo ${PATH} | sed -e "s|:${HOME}/.local/bin||g"`:${HOME}/.local/bin
+
 if (-f ~/.alias.csh) then
     source ~/.alias.csh
 endif

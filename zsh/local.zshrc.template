@@ -1,3 +1,7 @@
+# Firstly we need to remove the exist path if it has been added, "${HOME}" should
+# be used instead of "~" in order to make "sed" work correctly.
+# export PATH=`echo ${PATH} | sed -e "s|:${HOME}/.local/bin||g"`:${HOME}/.local/bin
+
 if [[ -a ~/.alias.zsh ]]; then
     source ~/.alias.zsh
 fi
