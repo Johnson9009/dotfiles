@@ -326,8 +326,6 @@ you should place your code here."
   (setq counsel-find-file-ignore-regexp "\\`\\.")
   ;; Use the input to replace the selected region.
   (delete-selection-mode 1)
-  ;; Remap the key binding of redo.
-  (global-set-key (kbd "M-/") 'undo-tree-redo)
   ;; Change some marks of whitespace.
   (setq whitespace-display-mappings
         '((space-mark 32 [183]) ; 32 SPACE, 183 MIDDLE DOT 「·」
