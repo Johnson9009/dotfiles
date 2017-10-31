@@ -16,4 +16,7 @@ bin/python -> bin/python3
 bin/pip -> bin/pip3
 bin/ipython -> bin/ipython3
 bin/ipdb -> bin/ipdb3
-
+bin/cmkd -> bin/cmake.py
+bin/cmkr -> bin/cmake.py
+bin/cmkrd -> bin/cmake.py
+bin/cmkmr -> bin/cmake.py

@@ -10,6 +10,8 @@ bin/**
 !bin/ipdb3
 !bin/pdb.ipy
 !bin/setup.py
+!bin/cmake.py
+!bin/cmkb
 
 vim/**
 !vim/vimrc

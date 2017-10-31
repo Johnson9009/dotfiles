@@ -18,7 +18,7 @@ def getSymlinkAndTarget(line):
 
 
 def createSymlink(symlink, target, backupSymlinks):
-    if (path.exists(symlink) is True):
+    if (path.islink(symlink) is True or path.exists(symlink) is True):
         backupSymlink = '%s.bak' % symlink
         backupSuffix = 1
         while (True):
