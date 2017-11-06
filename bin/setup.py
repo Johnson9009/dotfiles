@@ -34,6 +34,7 @@ def createSymlink(symlink, target, backupSymlinks):
         cmdLine = 'mkdir -p %s' % path.dirname(symlink)
         check_call(cmdLine, shell=True)
 
+    target = path.relpath(target, path.dirname(symlink))
     cmdLine = 'ln -s %s %s' % (target, symlink)
     check_call(cmdLine, shell=True)
 
