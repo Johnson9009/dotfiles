@@ -10,8 +10,8 @@ setenv LC_CTYPE en_US.UTF-8
 setenv LC_ALL en_US.UTF-8
 
 # Setting the full path of our dotfiles directory automatically.
-set DOTFILES_CSHRC_PATH = `readlink ~/.cshrc`; set DOTFILES_CSH_PATH = `dirname ${DOTFILES_CSHRC_PATH}`
-setenv DOTFILES `dirname ${DOTFILES_CSH_PATH}`
+set DOTFILES_CSHRC_PATH = `readlink ~/.cshrc`
+cd `dirname ${DOTFILES_CSHRC_PATH}`/../; setenv DOTFILES `pwd`; cd ${HOME}
 
 # Load common environment variables setting such as EDITOR, PATH and so on.
 source ${DOTFILES}/env/env.csh
