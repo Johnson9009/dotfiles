@@ -72,7 +72,9 @@ LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
 # Setting the full path of our dotfiles directory automatically.
-cd $(dirname $(dirname $(readlink ~/.zshrc))); export DOTFILES=`pwd`; cd ${HOME}
+OLD_DIR=`pwd`;
+cd ${HOME}; cd $(dirname $(dirname $(readlink ~/.zshrc))); export DOTFILES=`pwd`; cd ${OLD_DIR}
+unset OLD_DIR
 
 # Load common environment variables setting such as EDITOR, PATH and so on.
 source ${DOTFILES}/env/env.zsh

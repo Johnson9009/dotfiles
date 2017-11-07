@@ -15,8 +15,10 @@ if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]] && [[ "$-" == *m* ]] && [[ "$-" == *l* ]
     echo -n "Would you like to launch tmux? (y/n) [y]: "
     read line
     if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
+        unset line
         exec tmux
     else
         clear
     fi
+    unset line
 fi

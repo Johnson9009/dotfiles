@@ -16,8 +16,10 @@ else
     echo -n "Would you like to launch tmux? (y/n) [y]: "
     set line = $<
     if ($line =~ Y* || $line =~ y* || $line == "") then
+        unset line
         exec tmux
     else
         clear
     endif
+    unset line
 endif

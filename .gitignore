@@ -12,6 +12,13 @@ bin/**
 !bin/setup.py
 !bin/cmake.py
 !bin/cmkb
+!bin/venv/
+
+bin/venv/**
+!bin/venv/venv.zsh
+!bin/venv/venv.csh
+!bin/venv/venv_bootstrap_generator.py
+
 
 vim/**
 !vim/vimrc
