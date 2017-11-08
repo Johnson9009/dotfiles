@@ -12,7 +12,7 @@ except ImportError:
         sys.stderr.write("Can't find module virtualenv in python2 nor python3, please install it first.\n"
                          'if you are in a Python virtual environment, deactivate from it maybe help.\n')
         sys.exit(1)
-    os.execvp(alternative_python, [alternative_python, os.path.realpath(__file__)] + os.argv[1:])
+    os.execvp(alternative_python, [alternative_python, os.path.realpath(__file__)] + sys.argv[1:])
 
 
 EXTRA_TEXT = '''
@@ -35,32 +35,28 @@ def adjust_options(options, args):
                     if (os.path.exists(raw_line) is True):
                         valid_lines.append(raw_line)
                 if (len(valid_lines) == 0):
-                    raise FileNotFoundError
-                for index, line in enumerate(valid_lines):
-                    print('[%d] %s\\t<===>\\t%s' % (index, os.path.basename(line), line))
-
-                try:
-                    new_venv_home_dir = valid_lines[eval(input('\\nSelect Your Choice: '))]
-                except Exception as e:
-                    print('Error: Please input the valid index.')
-                    sys.exit(1)
-
-                with open(options.switch_venv_tmp_file, 'w') as f:
-                    f.write(new_venv_home_dir)
-        except FileNotFoundError:
+                    raise IOError
+        except IOError:
             print("You haven't any Python virtual environments.")
+            sys.exit(0)
+
+        for index, line in enumerate(valid_lines):
+            print('[%d] %s\\t<===>\\t%s' % (index, os.path.basename(line), line))
+
+        try:
+            new_venv_home_dir = valid_lines[int(input('\\nSelect Your Choice: '))]
+        except Exception as e:
+            print('Error: Please input the valid index.')
+            sys.exit(1)
         except KeyboardInterrupt:
             print('')    # Just print a newline character to keep the shell prompt neat.
             sys.exit(1)
+
+        with open(options.switch_venv_tmp_file, 'w') as f:
+            f.write(new_venv_home_dir)
         sys.exit(0)
     else:
-        try:
-            import virtualenv
-        except ImportError:
-            sys.stderr.write("Can't find module virtualenv in current Python interpreter "
-                             '"%s",\\nif you are in a Python virtual environment, deactivate from it maybe help.\\n'
-                             % sys.executable)
-            sys.exit(1)
+        options.search_dirs.append("''' + os.path.join(os.path.dirname(virtualenv.__file__), 'virtualenv_support') + '''")
         return
 
 
@@ -72,7 +68,7 @@ def after_install(options, home_dir):
             if (new_venv_dir in lines):
                 lines.remove(new_venv_dir)
             lines.append(new_venv_dir)
-    except FileNotFoundError:
+    except IOError:
         lines = [new_venv_dir]
 
     cmdLine = 'mkdir -p %s' % os.path.dirname(venvs_file)
@@ -85,7 +81,7 @@ def after_install(options, home_dir):
 
 
 def main():
-    text = virtualenv.create_bootstrap_script(EXTRA_TEXT, python_version=sys.version_info.major)
+    text = virtualenv.create_bootstrap_script(EXTRA_TEXT)
     base_dir = os.path.dirname(os.path.realpath(__file__))
     bootstrap_script = os.path.join(base_dir, 'venv_bootstrap.py')
 
