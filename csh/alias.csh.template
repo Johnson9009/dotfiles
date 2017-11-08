@@ -2,4 +2,4 @@
 # they will be treated as normal characters. This rule is common both in csh, bash, zsh. So we should prefer
 # double quote mark in shell script if we can.
 alias cdf "cd ${DOTFILES}"
-alias venv "source ${DOTFILES}/bin/venv/venv.csh \!:*"
+alias venv "source ${DOTFILES}/venv/venv.csh \!:*"
