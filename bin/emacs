@@ -1,2 +1,1 @@
-#!/bin/sh
-exec emacsx -nw $@
+../spacemacs.d/launcher.sh

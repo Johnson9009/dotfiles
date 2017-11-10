@@ -1,3 +1,0 @@
-import sys
-
-get_ipython().magic('run -d ' + ' '.join(sys.argv[1:]))

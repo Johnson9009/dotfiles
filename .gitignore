@@ -1,17 +1,5 @@
 bin/**
-!bin/emacs
-!bin/emx
-!bin/em
-!bin/pip2
-!bin/pip3
-!bin/ipython2
-!bin/ipython3
-!bin/ipdb2
-!bin/ipdb3
-!bin/pdb.ipy
 !bin/setup.py
-!bin/cmake.py
-!bin/cmkb
 
 vim/**
 !vim/vimrc

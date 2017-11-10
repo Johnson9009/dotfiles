@@ -1,2 +1,1 @@
-#!/bin/sh
-exec python2 -m pip $@
+../python/package_launcher.py

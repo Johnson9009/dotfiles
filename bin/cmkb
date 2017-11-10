@@ -1,2 +1,1 @@
-#!/bin/sh
-exec cmake --build $@
+../cmake/launcher.sh
