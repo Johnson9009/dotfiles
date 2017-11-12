@@ -344,6 +344,11 @@ you should place your code here."
   (turn-on-xclip)
   ;; Save the current user buffer automatically when exit the evil emacs state.
   (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
+  ;; Change some leader key bindings.
+  (spacemacs/set-leader-keys
+    "bk"  'kill-buffer-and-window
+    "w-"  'split-below-and-focus-scratch
+    "w/"  'split-right-and-focus-scratch)
 
   ;; Below settings only have effects for GUI emacs.
 
@@ -368,6 +373,18 @@ you should place your code here."
   (interactive)
   (if (not (string-match-p "^\*" (buffer-name)))
       (save-buffer)))
+
+(defun split-below-and-focus-scratch ()
+  "Split window below and focus on it, then switch to scratch buffer."
+  (interactive)
+  (split-window-below-and-focus)
+  (spacemacs/switch-to-scratch-buffer))
+
+(defun split-right-and-focus-scratch ()
+  "Split window right and focus on it, then switch to scratch buffer."
+  (interactive)
+  (split-window-right-and-focus)
+  (spacemacs/switch-to-scratch-buffer))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
