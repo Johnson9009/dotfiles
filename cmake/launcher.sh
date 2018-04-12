@@ -33,12 +33,16 @@ else
             target_dirname=$(pwd)/${target_dirname}
             ;;
     esac
-    shift
 fi
 
+# This shell script only responsible for the processing of correct path, leave all the error
+# circumstances to CMake itself.
 if [ -f "${target_dirname}/CMakeLists.txt" ]; then
     mkdir -p ${target_dirname}/build/${build_type}
     cd ${target_dirname}/build/${build_type}
 fi
 
+# Actually the last parameter of ${@} still exist, but it doesn't matter because CMake will ignore
+# this parameter which will be regarded as a unkown CMake parameter by CMake. It is too difficult to
+# remove the last parameter from ${@} in POSIX shell, so just leave it there.
 exec cmake -DCMAKE_BUILD_TYPE=${build_type} ${@} ${target_dirname}
