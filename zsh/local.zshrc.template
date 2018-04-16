@@ -1,16 +1,21 @@
-# Firstly we need to remove the exist path if it has been added, "${HOME}" should
-# be used instead of "~" in order to make "sed" work correctly.
-# export PATH=`echo ${PATH} | sed -e "s|:${HOME}/.local/bin||g"`:${HOME}/.local/bin
+# 1. Source Other Runtime Configuration File
 
-if [[ -a ~/.alias.zsh ]]; then
-    source ~/.alias.zsh
-fi
 
-# Do nothing if we are already in tmux or if current shell is not the login shell,
-# such as a shell launched in editor or a shell used to run a shell script.
-# Otherwise prompt to replace current shell itself with tmux or not, any string
-# headed by "Y" or "y" will be regarded as "yes", in addition press "Enter" key
-# directly also is regarded as "yes".
+# 2. Environment Variable Setting
+# For the circumstances that adding more values to a exist environment variable, firstly the exist
+# old value need to be removed if it has been added. In addition, "${HOME}" should be used instead
+# of "~" in order to make "sed" work correctly. For example, appending "~/bin" to the environment
+# variable "PATH" can be achieved through something like below.
+#     export PATH=`echo ${PATH} | sed -e "s|:${HOME}/bin||g"`:${HOME}/bin
+
+
+# 3. Load Alias and Finish Setting
+source ${DOTFILES}/zsh/alias.zsh
+
+# Do nothing if we are already in tmux or if current shell is not the login shell, such as a shell
+# launched in editor or a shell used to run a shell script. Otherwise prompt to replace current
+# shell itself with tmux or not, any string headed by "Y" or "y" will be regarded as "yes". In
+# addition, pressing "Enter" key directly also is regarded as "yes".
 if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]] && [[ "$-" == *m* ]] && [[ "$-" == *l* ]]; then
     echo -n "Would you like to launch tmux? (y/n) [y]: "
     read line

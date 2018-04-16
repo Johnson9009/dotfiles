@@ -79,10 +79,9 @@ unset OLD_DIR
 # Load common environment variables setting such as EDITOR, PATH and so on.
 source ${DOTFILES}/env/env.zsh
 
-# Stash your local runtime configurations in ~/.local.zshrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but you'll have
-# access to them in your scripts. You can do anything you want safely, because this is
-# the last runtime configuration file current shell will load.
+# Put local runtime configurations in ~/.local.zshrc, they'll stay out of your main dotfiles
+# repository (which maybe public on the internet, like this one). Anything can be done safely,
+# because this is the last runtime configuration file current shell will load.
 if [[ -a ~/.local.zshrc ]]; then
     source ~/.local.zshrc
 fi
