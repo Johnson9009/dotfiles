@@ -9,8 +9,10 @@
 #     export PATH=`echo ${PATH} | sed -e "s|:${HOME}/bin||g"`:${HOME}/bin
 
 
-# 3. Load Alias and Finish Setting
-source ${DOTFILES}/csh/alias.csh
+# 3. Load Local Alias and Finish Setting
+if (-f ~/.local.alias.csh) then
+    source ~/.local.alias.csh
+endif
 
 # Do nothing if we are already in tmux or if current shell is not the login shell, such as a shell
 # launched in editor or a shell used to run a shell script. Otherwise prompt to replace current

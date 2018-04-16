@@ -77,7 +77,10 @@ cd ${HOME}; cd $(dirname $(dirname $(readlink ~/.zshrc))); export DOTFILES=`pwd`
 unset OLD_DIR
 
 # Load common environment variables setting such as EDITOR, PATH and so on.
-source ${DOTFILES}/env/env.zsh
+source ${DOTFILES}/zsh/env.zsh
+
+# Load common alias.
+source ${DOTFILES}/zsh/alias.zsh
 
 # Put local runtime configurations in ~/.local.zshrc, they'll stay out of your main dotfiles
 # repository (which maybe public on the internet, like this one). Anything can be done safely,
