@@ -16,8 +16,9 @@ case $(basename ${0}) in
         exec cmake --build ${@}
         ;;
     *)
-        echo "Error: Running from unknow symbolic link \"$0\", this shell script only can be"
-        echo "       run through symbolic link and now 'cmkd', 'cmkr', 'cmkrd', 'cmkmr' and 'cmkb' are supported."
+        echo "Error: Running from unknow symbolic link \"$0\", this shell script only can be run"
+        echo "       through symbolic link and now 'cmkd', 'cmkr', 'cmkrd', 'cmkmr' and 'cmkb' are\
+ supported."
         exit 1
         ;;
 esac

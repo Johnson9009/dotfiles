@@ -354,16 +354,21 @@ you should place your code here."
 
   ;; Below settings only have effects for GUI emacs.
 
-  ;; GUI emacs use wave as the separator, on Mac the separators are less saturated than the rest of the spaceline.
-  ;; Using utf-8 separator makes it go away completely without the need to change color space.
+  ;; GUI emacs use wave as the separator, on Mac the separators are less saturated than the rest of
+  ;; the spaceline. Using utf-8 separator makes it go away completely without the need to change
+  ;; color space.
   (setq powerline-default-separator 'utf-8)
-  ;; Setting cursor type from box to bar.
+  ;; Set cursor type from box to bar.
   (setq evil-emacs-state-cursor '("SkyBlue2" bar))
   (setq evil-normal-state-cursor '("DarkGoldenrod2" bar))
   (setq evil-visual-state-cursor '("gray" bar))
   (setq evil-motion-state-cursor '("plum3" bar))
-  ;; Setting the highlight background of current line to black, this make selected region become more distinct.
+  ;; Set the highlight background of current line to black, this make selected region become more
+  ;; distinct.
   (set-face-background 'hl-line "#000000")
+  ;; Set right margin to 100, and turn it on for all text and programming modes.
+  (setq-default fill-column 100)
+  (spacemacs/add-to-hooks 'turn-on-fci-mode '(text-mode-hook prog-mode-hook))
   )
 
 

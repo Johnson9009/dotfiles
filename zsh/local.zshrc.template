@@ -2,11 +2,12 @@
 
 
 # 2. Environment Variable Setting
-# For the circumstances that adding more values to a exist environment variable, firstly the exist
-# old value need to be removed if it has been added. In addition, "${HOME}" should be used instead
-# of "~" in order to make "sed" work correctly. For example, appending "~/bin" to the environment
-# variable "PATH" can be achieved through something like below.
-#     export PATH=`echo ${PATH} | sed -e "s|:${HOME}/bin||g"`:${HOME}/bin
+# For the circumstances that adding more values to a exist environment variable, it's better to use
+# aliases "addenvfront" or "addenvback", because they will remove the exist old value if it has been
+# added. In addition, "${HOME}" should be used instead of "~" in order to make "sed" work correctly
+# in any shell. For example, appending "${HOME}/bin" to the environment variable "PATH" can be
+# achieved through something like below. 
+#     addenvback PATH ${HOME}/bin
 
 
 # 3. Load Local Alias and Finish Setting
