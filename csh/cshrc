@@ -3,7 +3,7 @@ set autolist
 # Enable color display for the builtin ls-F and pass --color=auto to ls
 set color
 set complete = igncase
-set prompt = "%{\e[32m%}`hostname -s` %{\e[36m%}%c%{\e[0m%} "
+set prompt = "%{\e[32;1m%}`hostname -s` %{\e[35;1m%}%c%{\e[0m%} "
 
 setenv GREP_OPTIONS "--color=auto"
 setenv LC_CTYPE en_US.UTF-8
