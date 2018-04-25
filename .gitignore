@@ -1,5 +1,4 @@
-bin/**
-!bin/setup.py
+bin
 
 vim/**
 !vim/vimrc

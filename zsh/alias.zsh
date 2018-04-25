@@ -15,5 +15,5 @@ alias venv="source ${DOTFILES}/venv/venv.zsh"
 # Z shell provides syntax level support for double substitution, i.e., ${(P)XX}. In addition, if the
 # environment variable is set or not needn't to be check before calling "echo" command, because
 # "echo" will just output empty string if it is not set.
-addenvfront() { export ${1}=${2}:`echo ${(P)1} | sed -e "s|${2}:||g"` }
-addenvback()  { export ${1}=`echo ${(P)1} | sed -e "s|:${2}||g"`:${2} }
+addenvfront() { export ${1}="${2}:`echo ${(P)1} | sed -e "s|${2}:||g"`" }
+addenvback()  { export ${1}="`echo ${(P)1} | sed -e "s|:${2}||g"`:${2}" }
