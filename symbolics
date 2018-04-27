@@ -6,6 +6,8 @@
 ~/.cshrc -> csh/cshrc
 ~/.config/xfce4/terminal -> xfce4/terminal
 ~/.config/xfce4/xfconf/xfce-perchannel-xml -> xfce4/xfconf/xfce-perchannel-xml
+~/.mintty -> mintty
+~/.minttyrc -> mintty/minttyrc
 
 bin/emacsx ->
 bin/emacsclient ->

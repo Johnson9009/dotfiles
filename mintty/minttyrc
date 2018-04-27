@@ -1,0 +1,11 @@
+BoldAsFont=yes
+ThemeFile=dracula
+Font=Monaco for Powerline
+FontHeight=16
+Locale=en_US
+Charset=UTF-8
+Scrollbar=none
+Term=xterm-256color
+BellType=0
+AllowBlinking=yes
+BoldAsColour=yes
