@@ -44,7 +44,8 @@ values."
      auto-completion
      better-defaults
      emacs-lisp
-     git
+     (git :variables
+          git-commit-fill-column 80)
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      org
