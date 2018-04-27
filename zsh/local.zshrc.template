@@ -5,9 +5,9 @@
 # For the circumstances that adding more values to a exist environment variable, it's better to use
 # aliases "addenvfront" or "addenvback", because they will remove the exist old value if it has been
 # added. In addition, "${HOME}" should be used instead of "~" in order to make "sed" work correctly
-# in any shell. For example, appending "${HOME}/bin" to the environment variable "PATH" can be
-# achieved through something like below. 
-#     addenvback PATH ${HOME}/bin
+# in any shell. For example, inserting "${DOTFILES}/bin" to the front of environment variable "PATH"
+# can be achieved through something like below.
+#     addenvfront PATH ${DOTFILES}/bin
 
 
 # 3. Load Local Alias and Finish Setting
