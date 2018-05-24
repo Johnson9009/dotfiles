@@ -346,7 +346,6 @@ you should place your code here."
     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
   ;; Copy to or paste from system clipboard when spacemacs is running in terminal.
   (xclip-mode 1)
-  (turn-on-xclip)
   ;; Save the current user buffer automatically when exit the evil emacs state.
   (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
   ;; Change some leader key bindings.
