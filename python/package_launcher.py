@@ -49,7 +49,7 @@ if (os.path.islink(fuse) is True):
     if (entry is None):
         sys.stderr.write(
             'Error: Running from unknow symbolic link "%s",\n'
-            '       this Python package launcher script should only be run through symbolic link,\n'
+            '       this Python package launcher script only can be run through symbolic link,\n'
             '       please add the package support code corresponding to this symbolic link and\n'
             '       retry.\n' % fuse)
         sys.exit(1)
@@ -65,3 +65,8 @@ if (sys.argv[-1] == '\n'):
     # The package name here must be xx2 or xx3.
     package = os.path.basename(sys.argv[0])[:-1]
     packages_info[package]()
+else:
+    sys.stderr.write(
+        'Error: This Python package launcher script only can be run through symbolic link,\n'
+        '       please create correct symbolic link to it and retry.\n')
+    sys.exit(1)
