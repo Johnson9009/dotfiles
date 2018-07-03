@@ -39,8 +39,10 @@ values."
      (ivy :variables
           ;; Ignore internal buffers in buffer switch.
           ivy-ignore-buffers '("\\` " "\\`\\*")
-          ;; Ignore current dir(.) and father dir(..) in "counsel find file" default.
-          ivy-extra-directories nil)
+          ;; Only ignore father dir(..) in "counsel find file", current dir(.) is useful for the
+          ;; situations that need select directory, e.g., searching some text in all files under
+          ;; some directory recursively.
+          ivy-extra-directories '("./"))
      (auto-completion :variables
                       auto-completion-tab-key-behavior 'nil)
      better-defaults
@@ -326,9 +328,31 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (define-key evil-normal-state-map (kbd "m") 'evil-emacs-state)
-  (define-key evil-normal-state-map (kbd "C-n") 'evil-emacs-state)
-  (define-key evil-normal-state-map (kbd "C-p") 'evil-emacs-state)
+  (define-key evil-normal-state-map (kbd "C-n") (enter-emacs-state-and-move-line next))
+  (define-key evil-normal-state-map (kbd "C-p") (enter-emacs-state-and-move-line previous))
+  (define-key evil-normal-state-map (kbd "C-@") 'enter-emacs-state-and-set-mark)
+  (define-key evil-normal-state-map (kbd "C-SPC") 'enter-emacs-state-and-set-mark)
+  ;; Escape from "evil-emacs-state" to "evil-normal-state" when press "ESC" twice consecutive, this
+  ;; key binding is useful for working in high latency network, because "evil-escape-key-sequence"
+  ;; can't work very well in this situation.
   (define-key evil-emacs-state-map "" 'evil-normal-state)
+  ;; Change some leader key bindings.
+  (spacemacs/set-leader-keys
+    "bk"  'kill-buffer-and-window
+    "w-"  (split-and-focus-scratch below)
+    "w/"  (split-and-focus-scratch right))
+  ;; Mouse scrolling doesn't work when emacs is run in Mac OSX terminal. The root cause is that
+  ;; mwheel.el set "mouse-wheel-up-event" and "mouse-wheel-down-event" to "wheel-down" and
+  ;; "wheel-up" because of "ns-win" always in "features" of emacs no matter emacs is launched in GUI
+  ;; or terminal environment. In addition, the mouse wheel keys received from terminal is "mouse-4"
+  ;; and "mouse-5", received from GUI is "wheel-up" and "wheel-down". So change the values of
+  ;; "mouse-wheel-up-event" and "mouse-wheel-down-event" can't make emacs GUI and terminal clients
+  ;; work well at the same time when they connect to the same emacs daemon.
+  (if (featurep 'ns)
+      (progn
+        (global-set-key (kbd "<mouse-4>") (kbd "<wheel-up>"))
+        (global-set-key (kbd "<mouse-5>") (kbd "<wheel-down>"))))
+
   ;; Ignore hidden files in "counsel find file" default, these files will appear unless we input "."
   (setq counsel-find-file-ignore-regexp "\\`\\.")
   ;; Use the input to replace the selected region.
@@ -346,18 +370,16 @@ you should place your code here."
   (put 'dired-find-alternate-file 'disabled nil)
   (with-eval-after-load 'dired
     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
-  ;; Copy to or paste from system clipboard when spacemacs is running in terminal.
-  (xclip-mode 1)
-  ;; Save the current user buffer automatically when exit the evil emacs state.
-  (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
-  ;; Change some leader key bindings.
-  (spacemacs/set-leader-keys
-    "bk"  'kill-buffer-and-window
-    "w-"  'split-below-and-focus-scratch
-    "w/"  'split-right-and-focus-scratch)
+  ;; The default value is (5 ((shift) . 1) ((control) . nil)), it means emacs will scroll 5 lines
+  ;; when mouse wheel spin one step without any modifier key depressed, if the "shift" key depressed
+  ;; when mouse wheel spinning, then emacs only will scroll 1 line, if the "control" key depressed
+  ;; then emacs will scroll one screen. Scrolling 1 line per mouse wheel spin step is more smooth.
+  (setq mouse-wheel-scroll-amount '(1))
   ;; Set right margin to 100, and turn it on for all text and programming modes.
   (setq-default fill-column 100)
   (spacemacs/add-to-hooks 'turn-on-fci-mode '(text-mode-hook prog-mode-hook))
+  ;; Save the current user buffer automatically when exit the evil emacs state.
+  (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
   ;; Enable company mode globally and enable both vim and emacs style key bindings of company mode.
   ;; Only key bindings of the style which represented by dotspacemacs-editing-style will be set by
   ;; default, even though auto-completion layer add "spacemacs//company-active-navigation" to the
@@ -382,10 +404,37 @@ you should place your code here."
   ;; Set the highlight background of current line to black, this make selected region become more
   ;; distinct.
   (set-face-background 'hl-line "#000000")
+
+  ;; Below settings maybe failed in some platform, in order to avoid affecting the executing of
+  ;; other settings, so place them at the bottom of "dotspacemacs/user-config".
+
+  ;; Copy to or paste from system clipboard when spacemacs is running in terminal.
+  (xclip-mode 1)
   )
 
+;; User defined macros and functions.
 
-;; User defined functions.
+;; Split window below or right according to the value of parameter "direction" and focus on it, then
+;; switch to scratch buffer.
+(defmacro split-and-focus-scratch (direction)
+  `(lambda ()
+     (interactive)
+     (,(intern (concat "split-window-" (symbol-name direction) "-and-focus")))
+     (spacemacs/switch-to-scratch-buffer)))
+
+;; Enter "evil-emacs-state" firstly, and then move cursor to next or previous line according to the
+;; value of parameter "direction".
+(defmacro enter-emacs-state-and-move-line (direction)
+  `(lambda ()
+     (interactive)
+     (evil-emacs-state)
+     (,(intern (concat (symbol-name direction) "-line")))))
+
+(defun enter-emacs-state-and-set-mark (arg)
+  "Enter \"evil-emacs-state\" firstly, and then set mark at the current position of cursor."
+  (interactive "P")
+  (evil-emacs-state)
+  (set-mark-command arg))
 
 ;; Save user's current buffer if there are any changes.
 (defun save-user-current-buffer ()
@@ -393,18 +442,6 @@ you should place your code here."
   (interactive)
   (if (not (string-match-p "^\*" (buffer-name)))
       (save-buffer)))
-
-(defun split-below-and-focus-scratch ()
-  "Split window below and focus on it, then switch to scratch buffer."
-  (interactive)
-  (split-window-below-and-focus)
-  (spacemacs/switch-to-scratch-buffer))
-
-(defun split-right-and-focus-scratch ()
-  "Split window right and focus on it, then switch to scratch buffer."
-  (interactive)
-  (split-window-right-and-focus)
-  (spacemacs/switch-to-scratch-buffer))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
