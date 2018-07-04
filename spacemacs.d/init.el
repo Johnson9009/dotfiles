@@ -380,6 +380,13 @@ you should place your code here."
   (spacemacs/add-to-hooks 'turn-on-fci-mode '(text-mode-hook prog-mode-hook))
   ;; Save the current user buffer automatically when exit the evil emacs state.
   (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
+  ;; The priority of "buffer-display-table" is higher than it of "standard-display-table", and it
+  ;; isn't ensured that the "buffer-display-table" is initialized from "standard-display-table". So
+  ;; the hook added to "find-file-hook" is needed to change glyphs of "buffer-display-table", in
+  ;; addition, the glyphs of "standard-display-table" still need to be changed, because internal
+  ;; buffers, e.g., buffers of magit, minibuffers and so on, won't trigger the "find-file-hook".
+  (funcall (change-glyphs-of-display-table standard))
+  (add-hook 'find-file-hook (change-glyphs-of-display-table buffer))
   ;; Enable company mode globally and enable both vim and emacs style key bindings of company mode.
   ;; Only key bindings of the style which represented by dotspacemacs-editing-style will be set by
   ;; default, even though auto-completion layer add "spacemacs//company-active-navigation" to the
@@ -429,6 +436,17 @@ you should place your code here."
      (interactive)
      (evil-emacs-state)
      (,(intern (concat (symbol-name direction) "-line")))))
+
+;; Change the glyphs of "wrap", "truncation" and "vertical-border" in the display table specified by
+;; parameter "name", obviously "↩", "…" and "ǁ" is better choice than the default values "\", "$"
+;; and "|".
+(defmacro change-glyphs-of-display-table (name)
+  `(lambda ()
+     (interactive)
+     (set-display-table-slot ,(intern (concat (symbol-name name) "-display-table")) 'wrap ?\↩)
+     (set-display-table-slot ,(intern (concat (symbol-name name) "-display-table")) 'truncation ?\…)
+     (set-display-table-slot ,(intern (concat (symbol-name name) "-display-table"))
+                             'vertical-border ?\ǁ)))
 
 (defun enter-emacs-state-and-set-mark (arg)
   "Enter \"evil-emacs-state\" firstly, and then set mark at the current position of cursor."
