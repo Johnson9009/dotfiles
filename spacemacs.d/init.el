@@ -436,14 +436,14 @@ you should place your code here."
   `(lambda ()
      (interactive)
      (evil-emacs-state)
-     (,(intern (concat (symbol-name direction) "-line")))))
+     (,(intern (format "%s-line" direction)))))
 
 ;; Paste copied text before or after the cursor according to the value of parameter "position", and
 ;; then forward the cursor one character to keep the cursor to the end of pasted text.
 (defmacro paste-and-cursor-behind-pasted-text (position)
   `(lambda (count)
      (interactive "P<x>")
-     (,(intern (concat "evil-paste-" (symbol-name position))) count)
+     (,(intern (format "evil-paste-%s" position)) count)
      (forward-char)))
 
 ;; Split window below or right according to the value of parameter "direction" and focus on it, then
@@ -451,7 +451,7 @@ you should place your code here."
 (defmacro split-and-focus-scratch (direction)
   `(lambda ()
      (interactive)
-     (,(intern (concat "split-window-" (symbol-name direction) "-and-focus")))
+     (,(intern (format "split-window-%s-and-focus" direction)))
      (spacemacs/switch-to-scratch-buffer)))
 
 ;; Change the glyphs of "wrap", "truncation" and "vertical-border" in the display table specified by
@@ -460,10 +460,9 @@ you should place your code here."
 (defmacro change-glyphs-of-display-table (name)
   `(lambda ()
      (interactive)
-     (set-display-table-slot ,(intern (concat (symbol-name name) "-display-table")) 'wrap ?\↩)
-     (set-display-table-slot ,(intern (concat (symbol-name name) "-display-table")) 'truncation ?\…)
-     (set-display-table-slot ,(intern (concat (symbol-name name) "-display-table"))
-                             'vertical-border ?\ǁ)))
+     (set-display-table-slot ,(intern (format "%s-display-table" name)) 'wrap ?\↩)
+     (set-display-table-slot ,(intern (format "%s-display-table" name)) 'truncation ?\…)
+     (set-display-table-slot ,(intern (format "%s-display-table" name)) 'vertical-border ?\ǁ)))
 
 (defun enter-emacs-state-and-set-mark (arg)
   "Enter \"evil-emacs-state\" firstly, and then set mark at the current position of cursor."
