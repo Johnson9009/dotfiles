@@ -332,6 +332,9 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "C-p") (enter-emacs-state-and-move-line previous))
   (define-key evil-normal-state-map (kbd "C-@") 'enter-emacs-state-and-set-mark)
   (define-key evil-normal-state-map (kbd "C-SPC") 'enter-emacs-state-and-set-mark)
+  ;; Swap key bindings of "p" and "P" and after pasting keep cursor to the end of pasted text.
+  (define-key evil-normal-state-map (kbd "p") (paste-and-cursor-behind-pasted-text before))
+  (define-key evil-normal-state-map (kbd "P") (paste-and-cursor-behind-pasted-text after))
   ;; Escape from "evil-emacs-state" to "evil-normal-state" when press "ESC" twice consecutive, this
   ;; key binding is useful for working in high latency network, because "evil-escape-key-sequence"
   ;; can't work very well in this situation.
@@ -397,6 +400,11 @@ you should place your code here."
   (global-company-mode)
   (spacemacs//company-active-navigation 'vim)
   (spacemacs//company-active-navigation 'emacs)
+  ;; Prevent the replaced text to be added to the kill ring, so that the copied text can be used to
+  ;; replace other text multiple times.
+  (setq evil-kill-on-visual-paste nil)
+  ;; Allow the cursor be moved past the last character of a line in "evil-normal-state".
+  (setq evil-move-beyond-eol t)
 
   ;; Below settings only have effects for GUI emacs.
 
@@ -422,14 +430,6 @@ you should place your code here."
 
 ;; User defined macros and functions.
 
-;; Split window below or right according to the value of parameter "direction" and focus on it, then
-;; switch to scratch buffer.
-(defmacro split-and-focus-scratch (direction)
-  `(lambda ()
-     (interactive)
-     (,(intern (concat "split-window-" (symbol-name direction) "-and-focus")))
-     (spacemacs/switch-to-scratch-buffer)))
-
 ;; Enter "evil-emacs-state" firstly, and then move cursor to next or previous line according to the
 ;; value of parameter "direction".
 (defmacro enter-emacs-state-and-move-line (direction)
@@ -437,6 +437,22 @@ you should place your code here."
      (interactive)
      (evil-emacs-state)
      (,(intern (concat (symbol-name direction) "-line")))))
+
+;; Paste copied text before or after the cursor according to the value of parameter "position", and
+;; then forward the cursor one character to keep the cursor to the end of pasted text.
+(defmacro paste-and-cursor-behind-pasted-text (position)
+  `(lambda (count)
+     (interactive "P<x>")
+     (,(intern (concat "evil-paste-" (symbol-name position))) count)
+     (forward-char)))
+
+;; Split window below or right according to the value of parameter "direction" and focus on it, then
+;; switch to scratch buffer.
+(defmacro split-and-focus-scratch (direction)
+  `(lambda ()
+     (interactive)
+     (,(intern (concat "split-window-" (symbol-name direction) "-and-focus")))
+     (spacemacs/switch-to-scratch-buffer)))
 
 ;; Change the glyphs of "wrap", "truncation" and "vertical-border" in the display table specified by
 ;; parameter "name", obviously "↩", "…" and "ǁ" is better choice than the default values "\", "$"
