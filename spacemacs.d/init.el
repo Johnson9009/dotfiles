@@ -458,11 +458,14 @@ you should place your code here."
 ;; parameter "name", obviously "↩", "…" and "ǁ" is better choice than the default values "\", "$"
 ;; and "|".
 (defmacro change-glyphs-of-display-table (name)
-  `(lambda ()
-     (interactive)
-     (set-display-table-slot ,(intern (format "%s-display-table" name)) 'wrap ?\↩)
-     (set-display-table-slot ,(intern (format "%s-display-table" name)) 'truncation ?\…)
-     (set-display-table-slot ,(intern (format "%s-display-table" name)) 'vertical-border ?\ǁ)))
+  (let ((display-table (intern (format "%s-display-table" name))))
+    `(lambda ()
+       (interactive)
+       (unless ,display-table
+         (setq ,display-table (make-display-table)))
+       (set-display-table-slot ,display-table 'wrap ?\↩)
+       (set-display-table-slot ,display-table 'truncation ?\…)
+       (set-display-table-slot ,display-table 'vertical-border ?\ǁ))))
 
 (defun enter-emacs-state-and-set-mark (arg)
   "Enter \"evil-emacs-state\" firstly, and then set mark at the current position of cursor."
