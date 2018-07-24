@@ -73,7 +73,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(evil-unimpaired evil-ediff)
+   dotspacemacs-excluded-packages '(evil-unimpaired evil-ediff clean-aindent-mode)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -355,6 +355,11 @@ you should place your code here."
       (progn
         (global-set-key (kbd "<mouse-4>") (kbd "<wheel-up>"))
         (global-set-key (kbd "<mouse-5>") (kbd "<wheel-down>"))))
+  ;; Replace "backward-kill-word" with "backward-delete-word" to avoid the deleted text being added
+  ;; to kill ring.
+  (global-set-key (kbd "M-DEL") (lambda (arg)
+                                  (interactive "p")
+                                  (delete-region (point) (progn (forward-word (- arg)) (point)))))
 
   ;; Ignore hidden files in "counsel find file" default, these files will appear unless we input "."
   (setq counsel-find-file-ignore-regexp "\\`\\.")
@@ -391,6 +396,13 @@ you should place your code here."
   ;; buffers, e.g., buffers of magit, minibuffers and so on, won't trigger the "find-file-hook".
   (funcall (change-glyphs-of-display-table standard))
   (add-hook 'find-file-hook (change-glyphs-of-display-table buffer))
+  ;; Center the screen after all below functions called, the parameter "&rest _" of lambda function
+  ;; can't be ignored, otherwise the lambda function will can't work.
+  (let ((scroll-to-center (lambda (&rest _) (recenter))))
+    (advice-add 'spacemacs/jump-to-definition :after scroll-to-center)
+    (advice-add 'find-function :after scroll-to-center)
+    (advice-add 'find-variable :after scroll-to-center)
+    (advice-add 'evil-goto-line :after scroll-to-center))
   ;; Enable company mode globally and enable both vim and emacs style key bindings of company mode.
   ;; Only key bindings of the style which represented by dotspacemacs-editing-style will be set by
   ;; default, even though auto-completion layer add "spacemacs//company-active-navigation" to the
