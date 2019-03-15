@@ -1,4 +1,5 @@
-syntax enable
+unlet! skip_defaults_vim
+source ${DOTFILES}/vim/defaults.vim
 colorscheme monokai
 
 if filereadable(expand('~/.local.vimrc'))

@@ -3,6 +3,7 @@ lib
 
 vim/**
 !vim/vimrc
+!vim/defaults.vim
 !vim/colors/monokai.vim
 
 xfce4/terminal/**
