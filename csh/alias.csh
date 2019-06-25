@@ -3,7 +3,9 @@
 # So we should prefer double quote mark in shell script.
 alias cdf "cd ${DOTFILES}"
 alias cdws "cd ${HOME}/workspaces"
+alias sudo "sudo -H"
 alias venv "source ${DOTFILES}/venv/venv.csh"
+alias ag "ag --color-line-number=32 --color-path=35 --color-match='1;31' --nogroup"
 
 # For the circumstances that adding more values to a exist environment variable, firstly the exist
 # old value need to be removed if it has been added, with the help of aliases "addenvfront" and

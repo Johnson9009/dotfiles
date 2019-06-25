@@ -696,4 +696,7 @@ set print sevenbit-strings off
 ##set follow-fork-mode child
 ##set detach-on-fork off
 
-python import os; exec(open('%s/gdb/loadLocalInit.py' % os.environ['DOTFILES']).read())
+python
+import os
+exec(open('%s/gdb/loadLocalInit.py' % os.environ['DOTFILES']).read())
+end

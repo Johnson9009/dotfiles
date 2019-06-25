@@ -4,7 +4,9 @@
 # process arguments, so aliases that need arguments only can be implemented as zsh function.
 alias cdf="cd ${DOTFILES}"
 alias cdws="cd ${HOME}/workspaces"
+alias sudo="sudo -H"
 alias venv="source ${DOTFILES}/venv/venv.zsh"
+alias ag="ag --color-line-number=32 --color-path=35 --color-match='1;31' --nogroup"
 
 # For the circumstances that adding more values to a exist environment variable, firstly the exist
 # old value need to be removed if it has been added, with the help of aliases "addenvfront" and
