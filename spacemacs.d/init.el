@@ -168,7 +168,7 @@ values."
    dotspacemacs-major-mode-leader-key ","
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m")
-   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+   dotspacemacs-major-mode-emacs-leader-key nil
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs C-i, TAB and C-m, RET.
    ;; Setting it to a non-nil value, allows for separate commands under <C-i>
@@ -338,7 +338,21 @@ you should place your code here."
   ;; Escape from "evil-emacs-state" to "evil-normal-state" when press "ESC" twice consecutive, this
   ;; key binding is useful for working in high latency network, because "evil-escape-key-sequence"
   ;; can't work very well in this situation.
-  (define-key evil-emacs-state-map "" 'evil-normal-state)
+  ;; Escape from "evil-emacs-state" to "evil-normal-state" by only press "ESC" once is not
+  ;; executable, the reason has something to do with "meta-prefix-char". Because "meta-prefix-char"
+  ;; equals to "ESC", thus any of key bindings using Meta key such as "M-f" actually is "ESC-f", so
+  ;; if "ESC" is binded to escaping to "evil-normal-state" through
+  ;; `(define-key evil-emacs-state-map (kbd "ESC") 'evil-normal-state)`, then all of the key
+  ;; bindings using Meta key can't be used in "evil-emacs-state".
+  (define-key evil-emacs-state-map (kbd "ESC ESC") 'evil-normal-state)
+  ;; Escape from "evil-insert-state" to "evil-normal-state" when press "ESC" one or more times
+  ;; immediately, just as above explanation, this key binding will cause all of the key bindings
+  ;; using Meta key can't work in "evil-insert-state", but it is acceptable because Meta key almost
+  ;; never used by Vim's key bindings.
+  (define-key evil-insert-state-map (kbd "ESC") 'evil-normal-state)
+  ;; Do the same action when press "ESC" one or more times and avoid the error message
+  ;; "ESC <escape> is undefined".
+  (define-key evil-normal-state-map (kbd "ESC <escape>") (kbd "<escape>"))
   ;; Change some leader key bindings.
   (spacemacs/set-leader-keys
     "bk"  'kill-buffer-and-window
