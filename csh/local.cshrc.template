@@ -1,7 +1,7 @@
 # 1. Source Other Runtime Configuration File
 
 
-# 2. Environment Variable Setting
+# 2. Environment Variable and Any Other Setting
 # For the circumstances that adding more values to a exist environment variable, it's better to use
 # aliases "addenvfront" or "addenvback", because they will remove the exist old value if it has been
 # added. In addition, "${HOME}" should be used instead of "~" in order to make "sed" work correctly
