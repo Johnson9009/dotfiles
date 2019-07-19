@@ -38,7 +38,7 @@ values."
      ;; ----------------------------------------------------------------
      (ivy :variables
           ;; Ignore internal buffers in buffer switch.
-          ivy-ignore-buffers '("\\` " "\\`\\*")
+          ivy-ignore-buffers '("\*.*" "magit[:-].*")
           ;; Only ignore father dir(..) in "counsel find file", current dir(.) is useful for the
           ;; situations that need select directory, e.g., searching some text in all files under
           ;; some directory recursively.

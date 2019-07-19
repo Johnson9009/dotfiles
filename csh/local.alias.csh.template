@@ -1,0 +1,23 @@
+# What need to be paid attention to is all the $, \, ` in single quote mark will not be processed
+# specially, they will be treated as normal characters. This rule is common both in csh, bash, zsh.
+# So we should prefer double quote mark in shell script.
+
+# Reliable Connection
+# 1. mosh
+# alias rd-server "mosh xx.xxx.xx.xx"
+#
+# 2. autossh + tmux
+# In order to ensure this method work, below requirements must be satisfied.
+# - Client machine must have installed `autossh`.
+# - If `tmux` can't be found in `${PATH}` of server machine, then the `tmux` path of server machine
+#   must be specified.
+# - Runtime configuration files of server machine's default shell which will be sourced when the
+#   shell is launched as none login shell must clear and can be executed successfully.
+# - Mustn't use any environment variable in `tmux` path, only `~` can be used as far as I know,
+#   because environment variables will be expanded on client machine side.
+# Debug Tips:
+# If below command not work, try to only run `autossh -M 0 xx.xxx.xx.xx` to check whether the
+# runtime configuration file of server machine's default shell is clear or not.
+#
+# alias autossh_tmux autossh -M 0 \!:1 -t \"~/.dotfiles/bin/tmux new -A -s `date +%m-%d-%H-%M-%S`\"
+# alias rd-server "autossh_tmux xx.xxx.xx.xx"
