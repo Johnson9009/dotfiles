@@ -76,15 +76,15 @@ LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
 # Setting the full path of our dotfiles directory automatically.
-OLD_DIR=`pwd`;
-cd ${HOME}; cd $(dirname $(dirname $(readlink ~/.zshrc))); export DOTFILES=`pwd`; cd ${OLD_DIR}
-unset OLD_DIR
+OLD_DIR=`pwd`; cd ${HOME}
+cd $(dirname $(readlink ~/.zshrc))/../..; export DOTFILES=`pwd`
+cd ${OLD_DIR}; unset OLD_DIR
 
 # Load common alias firstly, so alias like "addenvfront" can be used immediately from here.
-source ${DOTFILES}/zsh/alias.zsh
+source ${DOTFILES}/shell/zsh/alias.zsh
 
 # Load common environment variables setting such as EDITOR, PATH and so on.
-source ${DOTFILES}/zsh/env.zsh
+source ${DOTFILES}/shell/zsh/env.zsh
 
 # Put local runtime configurations in ~/.local.zshrc, they'll stay out of your main dotfiles
 # repository (which maybe public on the internet, like this one). Anything can be done safely,

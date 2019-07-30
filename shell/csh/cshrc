@@ -11,14 +11,14 @@ setenv LC_ALL en_US.UTF-8
 
 # Setting the full path of our dotfiles directory automatically.
 set DOTFILES_CSHRC_PATH = `readlink ~/.cshrc`; set OLD_DIR = `pwd`
-cd ${HOME}; cd `dirname ${DOTFILES_CSHRC_PATH}`/../; setenv DOTFILES `pwd`; cd ${OLD_DIR}
-unset DOTFILES_CSHRC_PATH; unset OLD_DIR
+cd ${HOME}; cd `dirname ${DOTFILES_CSHRC_PATH}`/../..; setenv DOTFILES `pwd`
+cd ${OLD_DIR}; unset DOTFILES_CSHRC_PATH; unset OLD_DIR
 
 # Load common alias firstly, so alias like "addenvfront" can be used immediately from here.
-source ${DOTFILES}/csh/alias.csh
+source ${DOTFILES}/shell/csh/alias.csh
 
 # Load common environment variables setting such as EDITOR, PATH and so on.
-source ${DOTFILES}/csh/env.csh
+source ${DOTFILES}/shell/csh/env.csh
 
 # Put local runtime configurations in ~/.local.cshrc, they'll stay out of your main dotfiles
 # repository (which maybe public on the internet, like this one). Anything can be done safely,
