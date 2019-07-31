@@ -6,5 +6,4 @@
 # system natively, so `which csh` is adopted when the proc file system way
 # failed.
 setenv SHELL `readlink -n /proc/$$/exe || which csh`
-setenv EDITOR em
 setenv TERM xterm-256color

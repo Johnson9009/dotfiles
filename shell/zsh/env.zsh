@@ -6,5 +6,4 @@
 # system natively, so `which zsh` is adopted when the proc file system way
 # failed.
 export SHELL=`readlink -n /proc/$$/exe || which zsh`
-export EDITOR=em
 export TERM=xterm-256color

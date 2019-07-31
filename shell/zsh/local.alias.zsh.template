@@ -1,7 +1,15 @@
-# What need to be paid attention to is all the $, \, ` in single quote mark will not be processed
-# specially, they will be treated as normal characters. This rule is common both in csh, bash, zsh.
-# So we should prefer double quote mark in shell script. In addition, in zsh alias can't support to
-# process arguments, so aliases that need arguments only can be implemented as zsh function.
+# If aliases are surrounded by double quote mark, then variable substitution($)
+# and command substitution(`) will be done when this file is processed, in
+# another word, the variable and command substitution will be applied when
+# aliases are defined. However, most of time, this isn't what we expect.
+# Surrounding aliases with single quote mark will prevent this behavior, all of
+# "$" and "`" inside single quote mark will be retained, when shell interprets
+# the alias definition statements, and variable and command substitution will be
+# applied when aliases are used.
+# So we should prefer single quote mark in alias definition.
+#
+# In zsh, alias can't support parameter, so alias that needs parameter only can
+# be implemented as function.
 
 # Reliable Connection
 # 1. mosh

@@ -9,6 +9,12 @@
 # can be achieved through something like below.
 #     addenvfront PATH ${DOTFILES}/bin
 
+# Set environment variable `EDITOR` to the first existing text editor command,
+# the commands will be searched in environment variable `PATH`, so all of
+# settings that will change environment variable `PATH` must be placed ahead of
+# this.
+# env2cmd EDITOR em vim vi
+
 
 # 3. Load Local Alias and Finish Setting
 if (-f ~/.local.alias.csh) then
