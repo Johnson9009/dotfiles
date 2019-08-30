@@ -432,17 +432,27 @@ you should place your code here."
   ;; Allow the cursor be moved past the last character of a line in "evil-normal-state".
   (setq evil-move-beyond-eol t)
 
+  ;; Change cursor type of evil emacs state from box to bar.
+  (setq evil-emacs-state-cursor '("SkyBlue2" (bar . 2)))
+
+  ;; Change cursor shape and color dynamically according to evil state, match
+  ;; cursor color with evil state color, when emacs or emacsclient is running in
+  ;; terminal. Current implementation depends on xterm escape sequence
+  ;; DECSCUSR(CSI Ps SP q) and OSC(Operating System Commands) 12, so this
+  ;; feature should only be enabled in terminals which support these escape
+  ;; sequences. AFAIK, mintty, `Apple Terminal.app`(need plugin manager
+  ;; `MacForge` to install plugin `MouseTerm plus`) and `Gnome Terminal` can
+  ;; support them.
+  (advice-add 'evil-set-cursor :after #'xterm-set-cursor-shape)
+  (advice-add 'evil-set-cursor-color :after #'xterm-set-cursor-color)
+  (advice-add 'delete-frame :before #'xterm-reset-cursor)
+
   ;; Below settings only have effects for GUI emacs.
 
   ;; GUI emacs use wave as the separator, on Mac the separators are less saturated than the rest of
   ;; the spaceline. Using utf-8 separator makes it go away completely without the need to change
   ;; color space.
   (setq powerline-default-separator 'utf-8)
-  ;; Set cursor type from box to bar.
-  (setq evil-emacs-state-cursor '("SkyBlue2" bar))
-  (setq evil-normal-state-cursor '("DarkGoldenrod2" bar))
-  (setq evil-visual-state-cursor '("gray" bar))
-  (setq evil-motion-state-cursor '("plum3" bar))
   ;; Set the highlight background of current line to black, this make selected region become more
   ;; distinct.
   (set-face-background 'hl-line "#000000")
@@ -505,6 +515,60 @@ you should place your code here."
   (interactive)
   (if (not (string-match-p "^\*" (buffer-name)))
       (save-buffer)))
+
+;; Change cursor shape and color dynamically using xterm escape sequences when
+;; emacs or emacsclient is running under terminal.
+
+(defun send-to-terminal-twice (seq)
+  "Send escape sequence to terminal twice."
+  (when seq
+    (send-string-to-terminal seq)
+    ;; In case of the escape sequence lost or isn't processed completely by
+    ;; the terminal.
+    (send-string-to-terminal seq)))
+
+;; Construct cursor shape setting escape sequence of xterm and send it to
+;; terminal according to the current value of `cursor-type`.
+(defun xterm-set-cursor-shape (&rest _)
+  "Set cursor shape."
+  ;; Only continue when emacs or emacsclient is running in terminal.
+  (unless (display-graphic-p)
+    (let ((prefix     "\e[")
+          (suffix     " q")
+          (box-blink  "1")
+          (hbar-blink "3")
+          (bar-blink  "5")
+          (shape      nil)
+          (seq        nil))
+      (cond ((symbolp cursor-type)
+             (setq shape cursor-type))
+            ((listp cursor-type)
+             (setq shape (car cursor-type))))
+      (cond ((eq shape 'box)
+             (setq seq (concat prefix box-blink suffix)))
+            ((eq shape 'bar)
+             (setq seq (concat prefix bar-blink suffix)))
+            ((eq shape 'hbar)
+             (setq seq (concat prefix hbar-blink suffix))))
+      (send-to-terminal-twice seq))))
+
+;; Construct cursor color setting escape sequence of xterm and send it to
+;; terminal.
+(defun xterm-set-cursor-color (color &rest _)
+  "Set cursor color."
+  ;; Only continue when emacs or emacsclient is running in terminal.
+  (unless (display-graphic-p)
+    (let ((hex-color (apply 'color-rgb-to-hex (color-name-to-rgb color))))
+      (if hex-color
+          (send-to-terminal-twice (concat "\e]12;" hex-color "\a"))))))
+
+;; Construct cursor shape and color resetting escape sequences of xterm and send
+;; it to terminal, reset the shape to blink bar and the color to light orange.
+(defun xterm-reset-cursor (&rest _)
+  "Reset cursor shape and color."
+  ;; Only continue when emacs or emacsclient is running in terminal.
+  (unless (display-graphic-p)
+    (send-to-terminal-twice "\e[5 q\e]12;#FFAF00\a")))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
