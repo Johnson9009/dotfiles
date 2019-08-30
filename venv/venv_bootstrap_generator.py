@@ -101,5 +101,6 @@ def main():
     os.chmod(bootstrap_script, os.stat(bootstrap_script).st_mode | 0o111)
     print('Bootstrap script is generated as %s successfully.' % bootstrap_script)
 
+
 if __name__ == '__main__':
     main()

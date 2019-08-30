@@ -3,8 +3,8 @@ import os
 import sys
 
 
-# For now the reason why below two packages using function entry is performance optimization and
-# demonstration.
+# For now the reason why below two packages using function entry is performance
+# optimization and demonstration.
 def ipython_entry():
     from IPython import start_ipython
     sys.exit(start_ipython())
@@ -38,7 +38,8 @@ def launch_package_using_correct_interpreter(interpreter, entry):
 
 
 fuse = os.path.abspath(sys.argv[0])
-# Executed by symbolic link and current Python interpreter must be '/usr/bin/env python'.
+# Executed by symbolic link and current Python interpreter must be
+# '/usr/bin/env python'.
 if (os.path.islink(fuse) is True):
     package = os.path.basename(fuse)
     interpreter = 'python'
@@ -56,10 +57,11 @@ if (os.path.islink(fuse) is True):
     else:
         launch_package_using_correct_interpreter(interpreter, entry)
 
-# Executed by this script itself and current Python interpreter already is the correct one.
+# Executed by this script itself and current Python interpreter already is the
+# correct one.
 if (sys.argv[-1] == '\n'):
-    # Remove current script name and the last dummy argument from argument list to prepare invoke
-    # the entry of target package.
+    # Remove current script name and the last dummy argument from argument list
+    # to prepare invoke the entry of target package.
     del(sys.argv[0])
     del(sys.argv[-1])
     # The package name here must be xx2 or xx3.

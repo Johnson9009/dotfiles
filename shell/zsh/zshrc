@@ -39,8 +39,8 @@ ZSH_THEME="robbyrussell"
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to skip verify whether the directory used to store
-# completion dump file is secure or not.
+# Uncomment the following line if you want to skip verify whether the directory
+# used to store completion dump file is secure or not.
 ZSH_DISABLE_COMPFIX="true"
 
 # Uncomment the following line if you want to change the command execution time
@@ -80,15 +80,17 @@ OLD_DIR=`pwd`; cd ${HOME}
 cd $(dirname $(readlink ~/.zshrc))/../..; export DOTFILES=`pwd`
 cd ${OLD_DIR}; unset OLD_DIR
 
-# Load common alias firstly, so alias like "addenvfront" can be used immediately from here.
+# Load common alias firstly, so alias like "addenvfront" can be used immediately
+# from here.
 source ${DOTFILES}/shell/zsh/alias.zsh
 
 # Load common environment variables setting such as EDITOR, PATH and so on.
 source ${DOTFILES}/shell/zsh/env.zsh
 
-# Put local runtime configurations in ~/.local.zshrc, they'll stay out of your main dotfiles
-# repository (which maybe public on the internet, like this one). Anything can be done safely,
-# because this is the last runtime configuration file current shell will load.
+# Put local runtime configurations in ~/.local.zshrc, they'll stay out of your
+# main dotfiles repository (which maybe public on the internet, like this one).
+# Anything can be done safely, because this is the last runtime configuration
+# file current shell will load.
 if [[ -a ~/.local.zshrc ]]; then
     source ~/.local.zshrc
 fi

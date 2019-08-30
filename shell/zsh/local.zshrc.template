@@ -2,11 +2,12 @@
 
 
 # 2. Environment Variable and Any Other Setting
-# For the circumstances that adding more values to a exist environment variable, it's better to use
-# aliases "addenvfront" or "addenvback", because they will remove the exist old value if it has been
-# added. In addition, "${HOME}" should be used instead of "~" in order to make "sed" work correctly
-# in any shell. For example, inserting "${DOTFILES}/bin" to the front of environment variable "PATH"
-# can be achieved through something like below.
+# For the circumstances that adding more values to a exist environment variable,
+# it's better to use aliases "addenvfront" or "addenvback", because they will
+# remove the exist old value if it has been added. In addition, "${HOME}" should
+# be used instead of "~" in order to make "sed" work correctly in any shell. For
+# example, inserting "${DOTFILES}/bin" to the front of environment variable
+# "PATH" can be achieved through something like below.
 #     addenvfront PATH ${DOTFILES}/bin
 
 # Set environment variable `EDITOR` to the first existing text editor command,
@@ -21,9 +22,9 @@ if [[ `uname -a` == *Microsoft* ]]; then
     export LS_COLORS=`echo $LS_COLORS | sed -r "s/ow=[^:]*/ow=${DI_COLOR}/"`
     unset DI_COLOR
     if [[ `umask` == "000" ]]; then
-        # Only can correct the permission of new file or folder when it is created under WSL file
-        # system, the new file or folder created under mounted Windows partitions is still have
-        # wrong permission.
+        # Only can correct the permission of new file or folder when it is
+        # created under WSL file system, the new file or folder created under
+        # mounted Windows partitions is still have wrong permission.
         umask 022
     fi
 fi
@@ -34,10 +35,11 @@ if [[ -a ~/.local.alias.zsh ]]; then
     source ~/.local.alias.zsh
 fi
 
-# Do nothing if we are already in tmux or if current shell is not the login shell, such as a shell
-# launched in editor or a shell used to run a shell script. Otherwise prompt to replace current
-# shell itself with tmux or not, any string headed by "Y" or "y" will be regarded as "yes". In
-# addition, pressing "Enter" key directly also is regarded as "yes".
+# Do nothing if we are already in tmux or if current shell is not the login
+# shell, such as a shell launched in editor or a shell used to run a shell
+# script. Otherwise prompt to replace current shell itself with tmux or not, any
+# string headed by "Y" or "y" will be regarded as "yes". In addition, pressing
+# "Enter" key directly also is regarded as "yes".
 if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]] && [[ "$-" == *m* ]] && [[ "$-" == *l* ]]; then
     echo -n "Would you like to launch tmux? (y/n) [y]: "
     read line

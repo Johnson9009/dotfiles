@@ -6,4 +6,3 @@ if (path.isfile(localInitFile) is True):
     print('The local initial file %s is loaded.' % localInitFile)
 else:
     print('If the local initial file %s is exist, it will be loaded automatically.' % localInitFile)
-

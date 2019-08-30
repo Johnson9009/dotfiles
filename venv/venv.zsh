@@ -9,8 +9,8 @@ if [ ! -f ${cur_script_dir}/venv_bootstrap.py ]; then
         ${cur_script_dir}/venv_bootstrap_generator.py
         has_error=$?
     else
-        # Although Z shell support escape character in double quote mark, in order to make code
-        # clean, the message has been separated here.
+        # Although Z shell support escape character in double quote mark, in
+        # order to make code clean, the message has been separated here.
         echo -n "Can't find the needed script "
         echo -n '"venv_bootstrap_generator.py" in the directory of "venv.zsh", put it there and try'
         echo    " again."

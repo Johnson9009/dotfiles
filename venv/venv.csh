@@ -23,11 +23,12 @@ if (! -f "${cur_script_dir}/venv_bootstrap.py") then
         ${cur_script_dir}/venv_bootstrap_generator.py
         set has_error = ${status}
     else
-        # C shell don't support escape character in double quote mark, so we must separate this
-        # message. In addition, what need to be paid attention to is all the $, \, ` in single quote
-        # mark will not be processed specially, they will be treated as normal characters. This rule
-        # is common both in csh, bash, zsh. So we should prefer double quote mark in shell script if
-        # we can.
+        # C shell don't support escape character in double quote mark, so we
+        # must separate this message. In addition, what need to be paid
+        # attention to is all the $, \, ` in single quote mark will not be
+        # processed specially, they will be treated as normal characters. This
+        # rule is common both in csh, bash, zsh. So we should prefer double
+        # quote mark in shell script if we can.
         echo -n "Can't find the needed script "
         echo -n '"venv_bootstrap_generator.py" in the directory of "venv.csh", put it there and try'
         echo    " again."

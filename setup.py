@@ -69,5 +69,3 @@ with open(dotfilesPath + 'symbolics') as f:
             continue
         createSymlink(symlink, target, backupSymlinks)
     summary(skipedSymlinks, backupSymlinks)
-
-

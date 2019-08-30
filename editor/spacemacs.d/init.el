@@ -39,9 +39,9 @@ values."
      (ivy :variables
           ;; Ignore internal buffers in buffer switch.
           ivy-ignore-buffers '("\*.*" "magit[:-].*")
-          ;; Only ignore father dir(..) in "counsel find file", current dir(.) is useful for the
-          ;; situations that need select directory, e.g., searching some text in all files under
-          ;; some directory recursively.
+          ;; Only ignore father dir(..) in "counsel find file", current dir(.)
+          ;; is useful for the situations that need select directory, e.g.,
+          ;; searching some text in all files under some directory recursively.
           ivy-extra-directories '("./"))
      (auto-completion :variables
                       auto-completion-tab-key-behavior 'nil)
@@ -72,7 +72,9 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(evil-unimpaired evil-ediff clean-aindent-mode)
+   dotspacemacs-excluded-packages '(evil-unimpaired
+                                    evil-ediff
+                                    clean-aindent-mode)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -262,8 +264,9 @@ values."
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
    ;; Control line numbers activation.
-   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
-   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode'
+   ;; and `text-mode' derivatives. If set to `relative', line numbers are
+   ;; relative.
    ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
    ;;   :disabled-for-modes dired-mode
@@ -315,7 +318,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  ;; Disable checking whether set PATH in shell runtime configuration file or not.
+  ;; Disable checking whether set PATH in shell runtime configuration file or
+  ;; not.
   (setq exec-path-from-shell-check-startup-files nil)
   )
 
@@ -327,54 +331,68 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (define-key evil-normal-state-map (kbd "m") 'evil-emacs-state)
-  (define-key evil-normal-state-map (kbd "C-n") (enter-emacs-state-and-move-line next))
-  (define-key evil-normal-state-map (kbd "C-p") (enter-emacs-state-and-move-line previous))
+  (define-key evil-normal-state-map
+    (kbd "C-n") (enter-emacs-state-and-move-line next))
+  (define-key evil-normal-state-map
+    (kbd "C-p") (enter-emacs-state-and-move-line previous))
   (define-key evil-normal-state-map (kbd "C-@") 'enter-emacs-state-and-set-mark)
-  (define-key evil-normal-state-map (kbd "C-SPC") 'enter-emacs-state-and-set-mark)
-  ;; Swap key bindings of "p" and "P" and after pasting keep cursor to the end of pasted text.
-  (define-key evil-normal-state-map (kbd "p") (paste-and-cursor-behind-pasted-text before))
-  (define-key evil-normal-state-map (kbd "P") (paste-and-cursor-behind-pasted-text after))
-  ;; Escape from "evil-emacs-state" to "evil-normal-state" when press "ESC" twice consecutive, this
-  ;; key binding is useful for working in high latency network, because "evil-escape-key-sequence"
-  ;; can't work very well in this situation.
-  ;; Escape from "evil-emacs-state" to "evil-normal-state" by only press "ESC" once is not
-  ;; executable, the reason has something to do with "meta-prefix-char". Because "meta-prefix-char"
-  ;; equals to "ESC", thus any of key bindings using Meta key such as "M-f" actually is "ESC-f", so
-  ;; if "ESC" is binded to escaping to "evil-normal-state" through
-  ;; `(define-key evil-emacs-state-map (kbd "ESC") 'evil-normal-state)`, then all of the key
-  ;; bindings using Meta key can't be used in "evil-emacs-state".
+  (define-key evil-normal-state-map
+    (kbd "C-SPC") 'enter-emacs-state-and-set-mark)
+  ;; Swap key bindings of "p" and "P" and after pasting keep cursor to the end
+  ;; of pasted text.
+  (define-key evil-normal-state-map
+    (kbd "p") (paste-and-cursor-behind-pasted-text before))
+  (define-key evil-normal-state-map
+    (kbd "P") (paste-and-cursor-behind-pasted-text after))
+  ;; Escape from "evil-emacs-state" to "evil-normal-state" when press "ESC"
+  ;; twice consecutive, this key binding is useful for working in high latency
+  ;; network, because "evil-escape-key-sequence" can't work very well in this
+  ;; situation. Escape from "evil-emacs-state" to "evil-normal-state" by only
+  ;; press "ESC" once is not executable, the reason has something to do with
+  ;; "meta-prefix-char". Because "meta-prefix-char" equals to "ESC", thus any of
+  ;; key bindings using Meta key such as "M-f" actually is "ESC-f", so if "ESC"
+  ;; is binded to escaping to "evil-normal-state" through
+  ;; `(define-key evil-emacs-state-map (kbd "ESC") 'evil-normal-state)`, then
+  ;; all of the key bindings using Meta key can't be used in "evil-emacs-state".
   (define-key evil-emacs-state-map (kbd "ESC ESC") 'evil-normal-state)
-  ;; Escape from "evil-insert-state" to "evil-normal-state" when press "ESC" one or more times
-  ;; immediately, just as above explanation, this key binding will cause all of the key bindings
-  ;; using Meta key can't work in "evil-insert-state", but it is acceptable because Meta key almost
-  ;; never used by Vim's key bindings.
+  ;; Escape from "evil-insert-state" to "evil-normal-state" when press "ESC" one
+  ;; or more times immediately, just as above explanation, this key binding will
+  ;; cause all of the key bindings using Meta key can't work in
+  ;; "evil-insert-state", but it is acceptable because Meta key almost never
+  ;; used by Vim's key bindings.
   (define-key evil-insert-state-map (kbd "ESC") 'evil-normal-state)
-  ;; Do the same action when press "ESC" one or more times and avoid the error message
-  ;; "ESC <escape> is undefined".
+  ;; Do the same action when press "ESC" one or more times and avoid the error
+  ;; message "ESC <escape> is undefined".
   (define-key evil-normal-state-map (kbd "ESC <escape>") (kbd "<escape>"))
   ;; Change some leader key bindings.
   (spacemacs/set-leader-keys
     "bk"  'kill-buffer-and-window
     "w-"  (split-and-focus-scratch below)
     "w/"  (split-and-focus-scratch right))
-  ;; Mouse scrolling doesn't work when emacs is run in Mac OSX terminal. The root cause is that
-  ;; mwheel.el set "mouse-wheel-up-event" and "mouse-wheel-down-event" to "wheel-down" and
-  ;; "wheel-up" because of "ns-win" always in "features" of emacs no matter emacs is launched in GUI
-  ;; or terminal environment. In addition, the mouse wheel keys received from terminal is "mouse-4"
-  ;; and "mouse-5", received from GUI is "wheel-up" and "wheel-down". So change the values of
-  ;; "mouse-wheel-up-event" and "mouse-wheel-down-event" can't make emacs GUI and terminal clients
-  ;; work well at the same time when they connect to the same emacs daemon.
+  ;; Mouse scrolling doesn't work when emacs is run in Mac OSX terminal. The
+  ;; root cause is that mwheel.el set "mouse-wheel-up-event" and
+  ;; "mouse-wheel-down-event" to "wheel-down" and "wheel-up" because of "ns-win"
+  ;; always in "features" of emacs no matter emacs is launched in GUI or
+  ;; terminal environment. In addition, the mouse wheel keys received from
+  ;; terminal is "mouse-4" and "mouse-5", received from GUI is "wheel-up" and
+  ;; "wheel-down". So change the values of "mouse-wheel-up-event" and
+  ;; "mouse-wheel-down-event" can't make emacs GUI and terminal clients work
+  ;; well at the same time when they connect to the same emacs daemon.
   (if (featurep 'ns)
       (progn
         (global-set-key (kbd "<mouse-4>") (kbd "<wheel-up>"))
         (global-set-key (kbd "<mouse-5>") (kbd "<wheel-down>"))))
-  ;; Replace "backward-kill-word" with "backward-delete-word" to avoid the deleted text being added
-  ;; to kill ring.
-  (global-set-key (kbd "M-DEL") (lambda (arg)
-                                  (interactive "p")
-                                  (delete-region (point) (progn (forward-word (- arg)) (point)))))
+  ;; Replace "backward-kill-word" with "backward-delete-word" to avoid the
+  ;; deleted text being added to kill ring.
+  (global-set-key
+   (kbd "M-DEL") (lambda (arg)
+                   (interactive "p")
+                   (delete-region (point) (progn
+                                            (forward-word (- arg))
+                                            (point)))))
 
-  ;; Ignore hidden files in "counsel find file" default, these files will appear unless we input "."
+  ;; Ignore hidden files in "counsel find file" default, these files will appear
+  ;; unless we input "."
   (setq counsel-find-file-ignore-regexp "\\`\\.")
   ;; Use the input to replace the selected region.
   (delete-selection-mode 1)
@@ -392,43 +410,51 @@ you should place your code here."
   (put 'dired-find-alternate-file 'disabled nil)
   (with-eval-after-load 'dired
     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
-  ;; The default value is (5 ((shift) . 1) ((control) . nil)), it means emacs will scroll 5 lines
-  ;; when mouse wheel spin one step without any modifier key depressed, if the "shift" key depressed
-  ;; when mouse wheel spinning, then emacs only will scroll 1 line, if the "control" key depressed
-  ;; then emacs will scroll one screen. Scrolling 1 line per mouse wheel spin step is more smooth.
+  ;; The default value is (5 ((shift) . 1) ((control) . nil)), it means emacs
+  ;; will scroll 5 lines when mouse wheel spin one step without any modifier key
+  ;; depressed, if the "shift" key depressed when mouse wheel spinning, then
+  ;; emacs only will scroll 1 line, if the "control" key depressed then emacs
+  ;; will scroll one screen. Scrolling 1 line per mouse wheel spin step is more
+  ;; smooth.
   (setq mouse-wheel-scroll-amount '(1))
   ;; Use the default value of right margin(80), and turn it on for all text and
   ;; programming modes.
   (spacemacs/add-to-hooks 'turn-on-fci-mode '(text-mode-hook prog-mode-hook))
   ;; Save the current user buffer automatically when exit the evil emacs state.
   (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
-  ;; The priority of "buffer-display-table" is higher than it of "standard-display-table", and it
-  ;; isn't ensured that the "buffer-display-table" is initialized from "standard-display-table". So
-  ;; the hook added to "find-file-hook" is needed to change glyphs of "buffer-display-table", in
-  ;; addition, the glyphs of "standard-display-table" still need to be changed, because internal
-  ;; buffers, e.g., buffers of magit, minibuffers and so on, won't trigger the "find-file-hook".
+  ;; The priority of "buffer-display-table" is higher than it of
+  ;; "standard-display-table", and it isn't ensured that the
+  ;; "buffer-display-table" is initialized from "standard-display-table". So the
+  ;; hook added to "find-file-hook" is needed to change glyphs of
+  ;; "buffer-display-table", in addition, the glyphs of "standard-display-table"
+  ;; still need to be changed, because internal buffers(e.g., buffers of magit,
+  ;; minibuffers and so on) won't trigger the "find-file-hook".
   (funcall (change-glyphs-of-display-table standard))
   (add-hook 'find-file-hook (change-glyphs-of-display-table buffer))
-  ;; Center the screen after all below functions called, the parameter "&rest _" of lambda function
-  ;; can't be ignored, otherwise the lambda function will can't work.
+  ;; Center the screen after all below functions called, the parameter "&rest _"
+  ;; of lambda function can't be ignored, otherwise the lambda function will
+  ;; can't work.
   (let ((scroll-to-center (lambda (&rest _) (recenter))))
     (advice-add 'spacemacs/jump-to-definition :after scroll-to-center)
     (advice-add 'find-function :after scroll-to-center)
     (advice-add 'find-variable :after scroll-to-center)
     (advice-add 'evil-goto-line :after scroll-to-center))
-  ;; Enable company mode globally and enable both vim and emacs style key bindings of company mode.
-  ;; Only key bindings of the style which represented by dotspacemacs-editing-style will be set by
-  ;; default, even though auto-completion layer add "spacemacs//company-active-navigation" to the
-  ;; the hook "spacemacs-editing-style-hook", because this hook will not be executed when evil
-  ;; switch state between normal and emacs. The company mode must be enabled globally, or function
-  ;; "spacemacs//company-active-navigation" can't be called at here.
+  ;; Enable company mode globally and enable both vim and emacs style key
+  ;; bindings of company mode. Only key bindings of the style which represented
+  ;; by dotspacemacs-editing-style will be set by default, even though
+  ;; auto-completion layer add "spacemacs//company-active-navigation" to the
+  ;; hook "spacemacs-editing-style-hook", because this hook will not be executed
+  ;; when evil switch state between normal and emacs. The company mode must be
+  ;; enabled globally, or function "spacemacs//company-active-navigation" can't
+  ;; be called at here.
   (global-company-mode)
   (spacemacs//company-active-navigation 'vim)
   (spacemacs//company-active-navigation 'emacs)
-  ;; Prevent the replaced text to be added to the kill ring, so that the copied text can be used to
-  ;; replace other text multiple times.
+  ;; Prevent the replaced text to be added to the kill ring, so that the copied
+  ;; text can be used to replace other text multiple times.
   (setq evil-kill-on-visual-paste nil)
-  ;; Allow the cursor be moved past the last character of a line in "evil-normal-state".
+  ;; Allow the cursor be moved past the last character of a line in
+  ;; "evil-normal-state".
   (setq evil-move-beyond-eol t)
 
   ;; Change cursor type of evil emacs state from box to bar.
@@ -448,50 +474,53 @@ you should place your code here."
 
   ;; Below settings only have effects for GUI emacs.
 
-  ;; GUI emacs use wave as the separator, on Mac the separators are less saturated than the rest of
-  ;; the spaceline. Using utf-8 separator makes it go away completely without the need to change
-  ;; color space.
+  ;; GUI emacs use wave as the separator, on Mac the separators are less
+  ;; saturated than the rest of the spaceline. Using utf-8 separator makes it go
+  ;; away completely without the need to change color space.
   (setq powerline-default-separator 'utf-8)
-  ;; Set the highlight background of current line to black, this make selected region become more
-  ;; distinct.
+  ;; Set the highlight background of current line to black, this make selected
+  ;; region become more distinct.
   (set-face-background 'hl-line "#000000")
 
-  ;; Below settings maybe failed in some platform, in order to avoid affecting the executing of
-  ;; other settings, so place them at the bottom of "dotspacemacs/user-config".
+  ;; Below settings maybe failed in some platform, in order to avoid affecting
+  ;; the executing of other settings, so place them at the bottom of
+  ;; "dotspacemacs/user-config".
 
-  ;; Copy to or paste from system clipboard when spacemacs is running in terminal.
+  ;; Copy to or paste from system clipboard when spacemacs is running in
+  ;; terminal.
   (xclip-mode 1)
   )
 
 ;; User defined macros and functions.
 
-;; Enter "evil-emacs-state" firstly, and then move cursor to next or previous line according to the
-;; value of parameter "direction".
+;; Enter "evil-emacs-state" firstly, and then move cursor to next or previous
+;; line according to the value of parameter "direction".
 (defmacro enter-emacs-state-and-move-line (direction)
   `(lambda ()
      (interactive)
      (evil-emacs-state)
      (,(intern (format "%s-line" direction)))))
 
-;; Paste copied text before or after the cursor according to the value of parameter "position", and
-;; then forward the cursor one character to keep the cursor to the end of pasted text.
+;; Paste copied text before or after the cursor according to the value of
+;; parameter "position", and then forward the cursor one character to keep the
+;; cursor to the end of pasted text.
 (defmacro paste-and-cursor-behind-pasted-text (position)
   `(lambda (count)
      (interactive "P<x>")
      (,(intern (format "evil-paste-%s" position)) count)
      (forward-char)))
 
-;; Split window below or right according to the value of parameter "direction" and focus on it, then
-;; switch to scratch buffer.
+;; Split window below or right according to the value of parameter "direction"
+;; and focus on it, then switch to scratch buffer.
 (defmacro split-and-focus-scratch (direction)
   `(lambda ()
      (interactive)
      (,(intern (format "split-window-%s-and-focus" direction)))
      (spacemacs/switch-to-scratch-buffer)))
 
-;; Change the glyphs of "wrap", "truncation" and "vertical-border" in the display table specified by
-;; parameter "name", obviously "↩", "…" and "ǁ" is better choice than the default values "\", "$"
-;; and "|".
+;; Change the glyphs of "wrap", "truncation" and "vertical-border" in the
+;; display table specified by parameter "name", obviously "↩", "…" and "ǁ" is
+;; better choice than the default values "\", "$" and "|".
 (defmacro change-glyphs-of-display-table (name)
   (let ((display-table (intern (format "%s-display-table" name))))
     `(lambda ()
@@ -503,7 +532,8 @@ you should place your code here."
        (set-display-table-slot ,display-table 'vertical-border ?\ǁ))))
 
 (defun enter-emacs-state-and-set-mark (arg)
-  "Enter \"evil-emacs-state\" firstly, and then set mark at the current position of cursor."
+  "Enter \"evil-emacs-state\" firstly, and then set mark at the current
+position of cursor."
   (interactive "P")
   (evil-emacs-state)
   (set-mark-command arg))
