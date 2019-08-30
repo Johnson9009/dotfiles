@@ -47,8 +47,7 @@ values."
                       auto-completion-tab-key-behavior 'nil)
      better-defaults
      emacs-lisp
-     (git :variables
-          git-commit-fill-column 80)
+     git
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      org
@@ -56,7 +55,7 @@ values."
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
      (python :variables
-             python-fill-column 100)
+             python-fill-column 80)
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -398,8 +397,8 @@ you should place your code here."
   ;; when mouse wheel spinning, then emacs only will scroll 1 line, if the "control" key depressed
   ;; then emacs will scroll one screen. Scrolling 1 line per mouse wheel spin step is more smooth.
   (setq mouse-wheel-scroll-amount '(1))
-  ;; Set right margin to 100, and turn it on for all text and programming modes.
-  (setq-default fill-column 100)
+  ;; Use the default value of right margin(80), and turn it on for all text and
+  ;; programming modes.
   (spacemacs/add-to-hooks 'turn-on-fci-mode '(text-mode-hook prog-mode-hook))
   ;; Save the current user buffer automatically when exit the evil emacs state.
   (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)

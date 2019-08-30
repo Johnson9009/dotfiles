@@ -10,3 +10,4 @@ BellType=0
 AllowBlinking=yes
 BoldAsColour=yes
 CursorColour=255,175,0
+Columns=82
