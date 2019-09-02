@@ -10,9 +10,26 @@ setenv LC_CTYPE en_US.UTF-8
 setenv LC_ALL en_US.UTF-8
 
 # Setting the full path of our dotfiles directory automatically.
-set DOTFILES_CSHRC_PATH = `readlink ~/.cshrc`; set OLD_DIR = `pwd`
-cd ${HOME}; cd `dirname ${DOTFILES_CSHRC_PATH}`/../..; setenv DOTFILES `pwd`
-cd ${OLD_DIR}; unset DOTFILES_CSHRC_PATH; unset OLD_DIR
+# This script can be executed through 3 different ways.
+# - Executed directly by shell through symbolic link(e.g., ~/.cshrc -> cshrc)
+# - sourced by other script through symbolic link(e.g., source ~/.cshrc)
+# - sourced by other script directly(e.g., source cshrc)
+# The tcsh and csh haven't equivalent of bash's ${BASH_SOURCE} or zsh's
+# ${(%):-%x} from which the full path of the this script can be got, and the
+# special environment variable `$_` can't help, because it isn't updated
+# recursively, in another word, the command line to execute this script can't be
+# got by `$_` when this script is executed by other script.
+if (-dr /proc/$$/fd) then
+    # Prefer to get the full path of this script through `/proc` file system.
+    set SHRC = `ls -l /proc/$$/fd | grep -oE '/.*shell/csh/cshrc$'`
+else
+    # For the OS(e.g., Mac OS) that hasn't `/proc` file system, get it through
+    # command `lsof`.
+    set SHRC = `lsof -p $$ | grep -oE '/.*shell/csh/cshrc$'`
+endif
+set OLD_DIR = `pwd`; cd `dirname ${SHRC}`/../..; unset SHRC
+setenv DOTFILES `pwd`
+cd ${OLD_DIR}; unset OLD_DIR
 
 # Load common alias firstly, so alias like "addenvfront" can be used immediately
 # from here.

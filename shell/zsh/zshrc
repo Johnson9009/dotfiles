@@ -76,8 +76,19 @@ LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
 # Setting the full path of our dotfiles directory automatically.
-OLD_DIR=`pwd`; cd ${HOME}
-cd $(dirname $(readlink ~/.zshrc))/../..; export DOTFILES=`pwd`
+# This script can be executed through 3 different ways.
+# - Executed directly by shell through symbolic link(e.g., ~/.zshrc -> zshrc)
+# - sourced by other script through symbolic link(e.g., source ~/.zshrc)
+# - sourced by other script directly(e.g., source zshrc)
+# Below line of code can get the full path of this script no matter how this
+# script is executed.
+SHRC=${(%):-%x}
+# Resolve the real path of this script, if it is a symbolic link.
+while [[ -L ${SHRC} ]]; do
+    SHRC=`dirname ${SHRC}`/`readlink ${SHRC}`
+done
+OLD_DIR=`pwd`; cd `dirname ${SHRC}`/../..; unset SHRC
+export DOTFILES=`pwd`
 cd ${OLD_DIR}; unset OLD_DIR
 
 # Load common alias firstly, so alias like "addenvfront" can be used immediately
