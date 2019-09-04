@@ -39,7 +39,18 @@
 # separated words back to one entirety.
 # 1. `printf "%s\n"` will append newline to the end of each word, it will
 #    process all of words one by one.
-alias meval 'printf "%s\n" \!:* | source /dev/fd/0'
+# 2. The last argument of `printf` is an ugly workaround of tcsh and csh
+#    built-in command `source` bug, the bug will only happen when below two
+#    conditions are satisfied.
+#    - The script is piped to `source` like here
+#    - The last command of the script is tcsh and csh built-in command
+#    The bug cause the last `\n` is not processed, so the old prompt will not
+#    disappear and the new prompt will adjoin the old one, in addition, the next
+#    command will regard the not processed `\n` as user input. By the way, if $?
+#    is written directly here, there isn't method to avoid it is expanded.
+alias meval 'printf "%s\n" \!:*'\
+            '"`${DOTFILES}/shell/csh/launcher.sh'\
+            'cmd_str-exit_dollar_question_mark_by_self`" | source /dev/fd/0'
 
 alias cdf 'cd ${DOTFILES}'
 alias cdws 'cd ${HOME}/workspaces'
