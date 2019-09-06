@@ -28,13 +28,20 @@ endif
 # headed by "Y" or "y" will be regarded as "yes". In addition, pressing "Enter"
 # key directly also is regarded as "yes".
 if ("`tty`" != "not a tty" && ${?TMUX} == 0 && ${?loginsh} == 1) then
-    echo -n "Would you like to launch tmux? (y/n) [y]: "
-    set line = $<
-    if ($line =~ Y* || $line =~ y* || $line == "") then
-        unset line
-        exec tmux
+    tmux -V >& /dev/null
+    if ($? == 0) then
+        echo -n "Would you like to launch tmux? (y/n) [y]: "
+        set line = "$<"
+        if ("$line" =~ "Y*" || "$line" =~ "y*" || "$line" == "") then
+            unset line
+            exec tmux
+        else
+            unset line
+            clear
+        endif
     else
-        clear
+        cat <<EOF
+Warning: "tmux" can't work well, won't launch it!
+EOF
     endif
-    unset line
 endif

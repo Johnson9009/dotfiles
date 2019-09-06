@@ -40,14 +40,22 @@ fi
 # Otherwise prompt to replace current shell itself with tmux or not, any string
 # headed by "Y" or "y" will be regarded as "yes". In addition, pressing "Enter"
 # key directly also is regarded as "yes".
-if [[ "`tty`" != "not a tty" && "${TMUX}" == "" && -o login ]]; then
-    echo -n "Would you like to launch tmux? (y/n) [y]: "
-    read line
-    if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
-        unset line
-        exec tmux
+if [[ "`tty`" != "not a tty" && -z "${TMUX}" && -o login ]]; then
+    tmux -V > /dev/null 2>&1
+    if [[ $? == 0 ]]; then
+        echo -n "Would you like to launch tmux? (y/n) [y]: "
+        read line
+        # The right pattern part can't be surrounded by double quote mark.
+        if [[ "$line" == Y* || "$line" == y* || -z "$line" ]]; then
+            unset line
+            exec tmux
+        else
+            unset line
+            clear
+        fi
     else
-        clear
+        cat<<EOF
+Warning: "tmux" can't work well, won't launch it!
+EOF
     fi
-    unset line
 fi
