@@ -35,12 +35,12 @@ if [[ -a ~/.local.alias.zsh ]]; then
     source ~/.local.alias.zsh
 fi
 
-# Do nothing if we are already in tmux or if current shell is not the login
-# shell, such as a shell launched in editor or a shell used to run a shell
-# script. Otherwise prompt to replace current shell itself with tmux or not, any
-# string headed by "Y" or "y" will be regarded as "yes". In addition, pressing
-# "Enter" key directly also is regarded as "yes".
-if [[ "${TMUX+IN_TMUX}" != "IN_TMUX" ]] && [[ "$-" == *m* ]] && [[ "$-" == *l* ]]; then
+# Do nothing if the shell is not attached to any tty, or is already in tmux, or
+# isn't login shell(e.g., shells launched by editor or used to run scripts).
+# Otherwise prompt to replace current shell itself with tmux or not, any string
+# headed by "Y" or "y" will be regarded as "yes". In addition, pressing "Enter"
+# key directly also is regarded as "yes".
+if [[ "`tty`" != "not a tty" && "${TMUX}" == "" && -o login ]]; then
     echo -n "Would you like to launch tmux? (y/n) [y]: "
     read line
     if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
