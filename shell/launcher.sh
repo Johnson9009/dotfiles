@@ -1,38 +1,16 @@
 #!/bin/sh
 
 # Usage:
-#   cmd_str_setenv2first_exist_cmd shell_type env_name cmd1 cmd2 cmd3 ...
+#   cmd_str_setenv2first_exist_cmd env_name cmd1 cmd2 cmd3 ...
 # Output the command string, which is used to export the specified environment
-# variable to the first existing command, according to the shell type.
+# variable to the first existing command.
 # Because this script will be executed by `/bin/sh`, so it will only search the
 # commands from `PATH` environment variable, if the command is a alias or its
 # path is not in `PATH`, then it will be treated as a none existing command.
 cmd_str_setenv2first_exist_cmd() {
-    case ${1} in
-        csh)
-            export_str="setenv ${2} "
-            ;;
-        bash)
-            export_str="export ${2}="
-            ;;
-        zsh)
-            export_str="export ${2}="
-            ;;
-        *)
-            cat <<EOF
-cat <<EOG
-cmd_str-setenv2first_exist_cmd:
-Error: Unsupported Shell "${1}", now only csh, bash, zsh are supported.
-EOG
-false
-EOF
-            return 1
-            ;;
-    esac
-
-    # Remove the first 2 positional arguments "shell type" and "environment
-    # variable".
-    shift 2
+    export_str="export ${1}="
+    # Remove the first positional arguments "environment variable name".
+    shift 1
 
     for cmd in ${@}; do
         if $(command -v ${cmd} > /dev/null 2>&1); then

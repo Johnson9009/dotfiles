@@ -93,7 +93,7 @@ alias addenvback  'test $?\!:1 != 1 && setenv \!:1 :\!:2 ||'\
 # Export the environment variable to the first existing command.
 # Usage:
 #   env2cmd env_name cmd1 cmd2 cmd3 ...
-alias env2cmd cmd_str-setenv2first_exist_cmd csh '\!:* |' source-stdin
+alias env2cmd cmd_str-setenv2first_exist_cmd '\!:* |' source-stdin
 
 # Load common alias of multiple different shells.
 source ${DOTFILES}/shell/alias.sh

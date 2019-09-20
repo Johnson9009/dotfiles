@@ -74,7 +74,7 @@ addenvback()  { export ${1}="`echo ${(P)1} | sed -e "s|:${2}||g"`:${2}" }
 # Export the environment variable to the first existing command.
 # Usage:
 #   env2cmd env_name cmd1 cmd2 cmd3 ...
-env2cmd() { cmd_str-setenv2first_exist_cmd zsh ${@} | source-stdin }
+env2cmd() { cmd_str-setenv2first_exist_cmd ${@} | source-stdin }
 
 # Load common alias of multiple different shells.
 source ${DOTFILES}/shell/alias.sh
