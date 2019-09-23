@@ -9,7 +9,7 @@
 # path is not in `PATH`, then it will be treated as a none existing command.
 cmd_str_setenv2first_exist_cmd() {
     export_str="export ${1}="
-    # Remove the first positional arguments "environment variable name".
+    # Remove the first argument "environment variable name".
     shift 1
 
     for cmd in ${@}; do
@@ -34,16 +34,26 @@ EOF
     fi
 }
 
-# Dispatch to the corresponding function according to caller name.
-case $(basename ${0}) in
+# The function name is just the symbolic link name when this shell script is run
+# through symbolic link.
+func_name=$(basename ${0})
+# The function name is the first argument when this shell script is run
+# directly.
+if [ "${func_name}" = "launcher.sh" ]; then
+    func_name=${1}
+    # Remove the first argument "function name".
+    shift 1
+fi
+
+# Dispatch to the corresponding function.
+case ${func_name} in
     cmd_str-setenv2first_exist_cmd)
         cmd_str_setenv2first_exist_cmd ${@}
         ;;
     *)
         cat <<EOF
-Error: Running from unknow symbolic link "${0}",
-       this shell script only can be run through symbolic link and now
-       "cmd_str-setenv2first_exist_cmd" is supported.
+Error: Unknow function "${func_name}",
+       now only function "cmd_str_setenv2first_exist_cmd" is supported.
 EOF
         exit 1
         ;;

@@ -3,6 +3,7 @@
 # of csh can't be aliased to other command, so `alias-it` is used here and all
 # of shells need to implement it. The alias writing style here chose that of
 # bash and zsh.
+alias-it sh_launcher='${DOTFILES}/shell/launcher.sh'
 alias-it cdf='cd ${DOTFILES}'
 alias-it cdws='cd ${HOME}/workspaces'
 alias-it sudo='sudo -H'

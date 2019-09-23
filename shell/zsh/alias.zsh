@@ -58,6 +58,9 @@
 alias source-stdin='source /dev/fd/0'
 alias alias-it='alias'
 
+# Load common alias of multiple different shells.
+source ${DOTFILES}/shell/alias.sh
+
 # For the circumstances that adding more values to a exist environment variable,
 # firstly the exist old value need to be removed if it has been added, with the
 # help of aliases "addenvfront" and "addenvback", it become so easy. In
@@ -71,12 +74,9 @@ alias alias-it='alias'
 # it is not set.
 addenvfront() { export ${1}="${2}:`echo ${(P)1} | sed -e "s|${2}:||g"`" }
 addenvback()  { export ${1}="`echo ${(P)1} | sed -e "s|:${2}||g"`:${2}" }
+
 # Export the environment variable to the first existing command.
 # Usage:
 #   env2cmd env_name cmd1 cmd2 cmd3 ...
-env2cmd() { cmd_str-setenv2first_exist_cmd ${@} | source-stdin }
-
-# Load common alias of multiple different shells.
-source ${DOTFILES}/shell/alias.sh
-
+env2cmd() { sh_launcher cmd_str-setenv2first_exist_cmd ${@} | source-stdin }
 alias-it venv='source ${DOTFILES}/venv/venv.zsh'
