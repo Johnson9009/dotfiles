@@ -37,11 +37,9 @@ alias-it ag ag --color-line-number=32 --color-path=35 --color-match='"1;31"'\
 # `/proc/$$/exe` is linked to the real full path of the current shell. The proc
 # file system way works well on almost every platform, e.g. linux, MSYS2, WSL,
 # and even Android, except Mac OS, because Mac OS doesn't support the proc file
-# system natively, so command `lsof` is adopted when the proc file system way
+# system natively, so `which xsh` is adopted when the proc file system way
 # failed.
-setenv SHELL `readlink -n /proc/$$/exe ||\
-              lsof -Ffn0 -wp $$ |\
-              sed -nE '/^ftxt\x0n/{s|^ftxt\x0n([^(]+).*\x0$|\1|;s/ *$//;p}'`
+setenv SHELL `readlink -n /proc/$$/exe || which ${XSH}`
 # Terminal emulator can't set the environment variable `TERM` of remote server
 # without any server side administrator configuration, so it need to be set by
 # shell self.

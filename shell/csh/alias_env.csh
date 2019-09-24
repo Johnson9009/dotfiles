@@ -57,7 +57,7 @@ setenv XSH csh
 # 2. `/dev/std*` are not POSIX standard(e.g., Termux hasn't `/dev/stdin`),
 #    `/dev/fd/*` are more portable, it can work well on Mac OS, WSL, Msys2,
 #    Ubuntu, CentOS, Termux.
-# 3. The ahead command `sed` is an ugly workaround of tcsh and csh built-in
+# 3. The ahead command `awk` is an ugly workaround of tcsh and csh built-in
 #    command `source` bug,  the bug cause the last `\n` is not processed, so the
 #    old prompt will not disappear and the new prompt will adjoin the old one,
 #    in addition, the next command will regard the not processed `\n` as user
@@ -65,8 +65,9 @@ setenv XSH csh
 #    - The commands are piped to `source` like here
 #    - The last command of the commands is tcsh and csh built-in command
 #    The workaround is appending an external command, which only return the exit
-#    code of previous command, to commands through command `sed`.
-alias source-stdin sed -E \''$a ${DOTFILES}/shell/csh/launcher.sh exit $?'"' |"\
+#    code of previous command, to commands through command `awk`.
+alias source-stdin "awk '{print} END {print"\
+                   '"${DOTFILES}/shell/csh/launcher.sh exit $?"}'"' |"\
                    source /dev/fd/0
 alias alias-it alias
 
