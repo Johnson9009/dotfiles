@@ -8,22 +8,27 @@ FUNCTION:
 EOF
 }
 
+
 # Print usage if not specify the function that need to run.
 if [ $# -eq 0 ]; then
     usage
     exit 1
 fi
 
-# Execute the specified function.
-case ${1} in
+# The function name is the first argument.
+func_name=${1}
+# Remove the first argument "function name".
+shift 1
+
+# Dispatch to the corresponding function.
+case ${func_name} in
     exit)
-        exit ${2}
+        exit ${@}
         ;;
     *)
         cat <<EOF
-Error: Specify unknow function "${1}",
+Error: Specify unknow function "${func_name}",
        this shell script now only support run function "exit".
-
 EOF
         usage
         exit 1

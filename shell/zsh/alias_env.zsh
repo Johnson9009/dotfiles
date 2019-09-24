@@ -28,6 +28,14 @@
 #      Line continuation works as expectation, white-space characters inside
 #      double quote marks will be kept.
 
+# 1. Utility Environment Variables
+#
+# Identify type of the current shell.
+export XSH=zsh
+
+
+# 2. Utility Aliases
+#
 # In order to avoid duplicate implementation of the same logic on each shell,
 # logic should be moved to external script as much as possible. For the
 # circumstances which must do something inside current shell process(e.g.,
@@ -56,11 +64,29 @@
 #    `/dev/fd/*` are more portable, it can work well on Mac OS, WSL, Msys2,
 #    Ubuntu, CentOS, Termux.
 alias source-stdin='source /dev/fd/0'
-alias alias-it='alias'
+# Implement c shell's alias syntax.
+alias-it() {
+    if [[ "${*}" =~ "\!\*" ]]; then
+        # Z shell alias don't support argument, implement it using function.
+        echo "${1}() { ${@:2} }" | sed -E 's/\\!\*/${@}/' | source-stdin
+    else
+        # The single quote marks of alias target will be stript by shell before
+        # pass to command `echo`, so need to add it back.
+        echo "alias ${1}='${@:2}'" | source-stdin
+    fi
+}
+# Implement c shell built-in command `setenv` using command `export`.
+setenv() { echo "export ${1}=${@:2}" | source-stdin}
 
-# Load common alias of multiple different shells.
-source ${DOTFILES}/shell/alias.sh
 
+# 3. Shell Independent
+#
+# Load common aliases and environment variables used by multiple shells.
+source ${DOTFILES}/shell/alias_env.sh
+
+
+# 4. General Aliases
+#
 # For the circumstances that adding more values to a exist environment variable,
 # firstly the exist old value need to be removed if it has been added, with the
 # help of aliases "addenvfront" and "addenvback", it become so easy. In
@@ -74,9 +100,3 @@ source ${DOTFILES}/shell/alias.sh
 # it is not set.
 addenvfront() { export ${1}="${2}:`echo ${(P)1} | sed -e "s|${2}:||g"`" }
 addenvback()  { export ${1}="`echo ${(P)1} | sed -e "s|:${2}||g"`:${2}" }
-
-# Export the environment variable to the first existing command.
-# Usage:
-#   env2cmd env_name cmd1 cmd2 cmd3 ...
-env2cmd() { sh_launcher cmd_str-setenv2first_exist_cmd ${@} | source-stdin }
-alias-it venv='source ${DOTFILES}/venv/venv.zsh'

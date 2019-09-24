@@ -22,6 +22,14 @@
 #    all(include 0) of white-space characters ahead of the first meaningful
 #    character of the next line will be replaced to one space character.
 
+# 1. Utility Environment Variables
+#
+# Identify type of the current shell.
+setenv XSH csh
+
+
+# 2. Utility Aliases
+#
 # In order to avoid duplicate implementation of the same logic on each shell,
 # logic should be moved to external script as much as possible. For the
 # circumstances which must do something inside current shell process(e.g.,
@@ -58,18 +66,19 @@
 #    - The last command of the commands is tcsh and csh built-in command
 #    The workaround is appending an external command, which only return the exit
 #    code of previous command, to commands through command `sed`.
-alias source-stdin sed -e \''$a ${DOTFILES}/shell/csh/launcher.sh exit $?'"' |"\
+alias source-stdin sed -E \''$a ${DOTFILES}/shell/csh/launcher.sh exit $?'"' |"\
                    source /dev/fd/0
-# Implement other shells built-in command `export` using command `setenv`.
-alias export echo setenv '\!* |' sed -e "'s/=/ /' |" source-stdin
-# Support to define aliases using other shells' style, the single quote marks of
-# alias target will be stript by shell when pass to command `echo`, so add it
-# back.
-alias alias-it 'echo alias \!*'"\' | sed -e 's/=/ \x27/' | source-stdin"
+alias alias-it alias
 
-# Load common alias of multiple different shells.
-source ${DOTFILES}/shell/alias.sh
 
+# 3. Shell Independent
+#
+# Load common aliases and environment variables used by multiple shells.
+source ${DOTFILES}/shell/alias_env.sh
+
+
+# 4. General Aliases
+#
 # For the circumstances that adding more values to a exist environment variable,
 # firstly the exist old value need to be removed if it has been added, with the
 # help of aliases "addenvfront" and "addenvback", it become so easy. In
@@ -88,9 +97,3 @@ alias addenvfront 'test $?\!:1 != 1 && setenv \!:1 \!:2\: ||'\
                   'test $?\!:1 != 0 && setenv \!:1 \!:2\:`eval echo ${\!:1} | sed -e "s|\!:2\:||g"`'
 alias addenvback  'test $?\!:1 != 1 && setenv \!:1 :\!:2 ||'\
                   'test $?\!:1 != 0 && setenv \!:1 `eval echo ${\!:1} | sed -e "s|:\!:2||g"`:\!:2'
-
-# Export the environment variable to the first existing command.
-# Usage:
-#   env2cmd env_name cmd1 cmd2 cmd3 ...
-alias env2cmd sh_launcher cmd_str-setenv2first_exist_cmd '\!:* |' source-stdin
-alias-it venv='source ${DOTFILES}/venv/venv.csh'
