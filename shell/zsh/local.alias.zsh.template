@@ -3,17 +3,35 @@
 # another word, the variable and command substitution will be applied when
 # aliases are defined. However, most of time, this isn't what we expect.
 # Surrounding aliases with single quote mark will prevent this behavior, all of
-# "$" and "`" inside single quote mark will be retained, when shell interprets
+# "$" and "`" inside single quote mark will be retained when shell interprets
 # the alias definition statements, and variable and command substitution will be
 # applied when aliases are used.
-# So we should prefer single quote mark in alias definition.
+# So we should prefer single quote mark in alias definition. Single quote mark
+# can be escaped through two ways `\'` and `"'"`, but the way `\'` has something
+# different from other program languages, it can't work inside two paired single
+# quote marks, i.e., it should be outside of single quote marks like this
+# `'xxx'\''quoted'\''yyy'`.
 #
-# In zsh, alias can't support parameter, so alias that needs parameter only can
-# be implemented as function.
+# Z shell Specific
+# 1. Alias can't support parameter, so alias that needs parameter only can be
+#    implemented as function.
+# 2. All parts of the alias target must be surrounded by quote marks.
+# 3. Line continuation in alias target can be achieved using a backslash, but
+#    the behavior is different when the backslash is used in below 3 ways.
+#    - Backslash Outside of Quote Marks
+#      There shouldn't be any white-space characters ahead of the quote mark of
+#      next line, otherwise the next line will be omitted.
+#    - Backslash Inside of Single Quote Marks
+#      All of backslash, `\n` and white-space characters inside single quote
+#      marks will be kept, but alias still work well.
+#    - Backslash Inside of Double Quote Marks
+#      Line continuation works as expectation, white-space characters inside
+#      double quote marks will be kept.
 
 # Reliable Connection
+#
 # 1. mosh
-# alias rd-server="mosh xx.xxx.xx.xx"
+# alias rd-server='mosh xx.xxx.xx.xx'
 #
 # 2. autossh + tmux
 # In order to ensure this method work, below requirements must be satisfied.
@@ -35,13 +53,31 @@
 #   autossh -M 0 $1 -t "~/.dotfiles/bin/tmux new -A -s `date +%m-%d-%H-%M-%S`"
 # }
 #
-# alias rd-server="autossh_tmux xx.xxx.xx.xx"
+# alias rd-server='autossh_tmux xx.xxx.xx.xx'
+
+# Transfer File between SSH Server and Client
+#
+# These utilities launch the transfer at SSH server side, so the SSH client
+# machine also must have a running SSH service. The placeholder directory
+# `/xxx/Downloads` must be changed to absolute path of a SSH client directory.
+# Usage:
+#   d2c [-r] <file_or_dir>...
+# Download files or directories to the current ssh client machine, now only
+# support the `-r` option of command `scp`, and `-r` can appear at any position.
+# alias d2c='sh_launcher download2client /xxx/Downloads'
+# Usage:
+#   u2h [-r] <file_or_dir>...
+# Upload files or directories from the current ssh client machine to the current
+# directory, now only support the `-r` option of command `scp`, and `-r` can
+# appear at any position.
+# alias u2h='sh_launcher upload2here /xxx/Downloads'
 
 # Mac OS
+#
 # The behavior of `ls` and `rm` of Mac OS are different from that of GNU core
 # utilities', the color of Mac OS's `ls` and GNU core utilities' `ls` is
 # different, the Mac OS's `rm` don't support specifying options behind the
 # positional argument, e.g., `rm test_dir -rf`. GNU core utilities can be
 # installed through command `brew install coreutils`.
-# alias ls="gls --color=tty"
-# alias rm="grm"
+# alias ls='gls --color=tty'
+# alias rm='grm'

@@ -1,6 +1,54 @@
 #!/bin/sh
 
 # Usage:
+#   download2client client_destination_dir [-r] <file_or_dir>...
+# Download files or directories to the current ssh client machine through
+# command `scp`, now only support the `-r` option of command `scp`, and `-r` can
+# appear at any position.
+download2client() {
+    client_destination_dir="${SSH_CLIENT%% *}:${1}"
+    # Remove the first argument "destination directory of ssh client machine".
+    shift 1
+
+    for arg in ${@}; do
+        case ${arg} in
+            -*)
+                options="${options} ${arg}"
+                ;;
+            *)
+                files_or_dirs="${files_or_dirs} ${arg}"
+                ;;
+        esac
+    done
+
+    scp ${options} ${files_or_dirs} ${client_destination_dir}
+}
+
+# Usage:
+#   upload2here client_source_dir [-r] <file_or_dir>...
+# Upload files or directories from the current ssh client machine to the current
+# directory through command `scp`, now only support the `-r` option of command
+# `scp`, and `-r` can appear at any position.
+upload2here() {
+    client_source_dir="${SSH_CLIENT%% *}:${1}"
+    # Remove the first argument "source directory of ssh client machine".
+    shift 1
+
+    for arg in ${@}; do
+        case ${arg} in
+            -*)
+                options="${options} ${arg}"
+                ;;
+            *)
+                files_or_dirs="${files_or_dirs} ${client_source_dir}/${arg}"
+                ;;
+        esac
+    done
+
+    scp ${options} ${files_or_dirs} ./
+}
+
+# Usage:
 #   cmd_str_setenv2first_exist_cmd env_name cmd1 cmd2 cmd3 ...
 # Output the command string, which is used to export the specified environment
 # variable to the first existing command.
@@ -51,11 +99,18 @@ case ${func_name} in
     cmd_str-setenv2first_exist_cmd)
         cmd_str_setenv2first_exist_cmd ${@}
         ;;
+    download2client)
+        download2client ${@}
+        ;;
+    upload2here)
+        upload2here ${@}
+        ;;
     *)
         cat <<EOF
 cat <<EOG
 Error: Unknow function "${func_name}",
-       now only function "cmd_str-setenv2first_exist_cmd" is supported.
+       now only function "download2client", "upload2here" and
+       "cmd_str-setenv2first_exist_cmd" are supported.
 EOG
 false
 EOF
