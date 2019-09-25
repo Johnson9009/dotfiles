@@ -48,10 +48,28 @@ upload2here() {
     scp ${options} ${files_or_dirs} ./
 }
 
+# Return the absolute path of the specified process.
 # Usage:
-#   cmd_str_setenv2first_exist_cmd env_name cmd1 cmd2 cmd3 ...
+#   pid_path PID
+# The most reliable way to do that is consulting the proc file system using the
+# process ID(`PID`), `/proc/${PID}/exe` is linked to the absolute path of the
+# specified process. The proc file system way works well on almost every
+# platform(e.g. linux, MSYS2, WSL, and even Android), except Mac OS, because
+# Mac OS doesn't support the proc file system natively, so here prefer to get it
+# through command `[pidpath](https://github.com/cirocosta/pidpath)`.
+pid_path() {
+    pid=${1}
+    if $(command -v pidpath > /dev/null 2>&1); then
+        pidpath ${pid}
+    else
+        readlink -n /proc/${pid}/exe
+    fi
+}
+
 # Output the command string, which is used to export the specified environment
 # variable to the first existing command.
+# Usage:
+#   cmd_str_setenv2first_exist_cmd env_name cmd1 cmd2 cmd3 ...
 # Because this script will be executed by `/bin/sh`, so it will only search the
 # commands from `PATH` environment variable, if the command is a alias or its
 # path is not in `PATH`, then it will be treated as a none existing command.
@@ -105,11 +123,14 @@ case ${func_name} in
     upload2here)
         upload2here ${@}
         ;;
+    pid-path)
+        pid_path ${@}
+        ;;
     *)
         cat <<EOF
 cat <<EOG
 Error: Unknow function "${func_name}",
-       now only function "download2client", "upload2here" and
+       now only function "download2client", "upload2here", "pid-path" and
        "cmd_str-setenv2first_exist_cmd" are supported.
 EOG
 false
