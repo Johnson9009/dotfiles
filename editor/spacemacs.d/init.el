@@ -440,16 +440,17 @@ you should place your code here."
     (advice-add 'find-variable :after scroll-to-center)
     (advice-add 'evil-goto-line :after scroll-to-center))
   ;; Enable company mode globally and enable both vim and emacs style key
-  ;; bindings of company mode. Only key bindings of the style which represented
-  ;; by dotspacemacs-editing-style will be set by default, even though
-  ;; auto-completion layer add "spacemacs//company-active-navigation" to the
-  ;; hook "spacemacs-editing-style-hook", because this hook will not be executed
-  ;; when evil switch state between normal and emacs. The company mode must be
+  ;; bindings of company mode. Key bindings of the style(vim) which represented
+  ;; by "dotspacemacs-editing-style" will be enabled by default, key bindings of
+  ;; emacs style can't be enabled automatically even though auto-completion
+  ;; layer add "spacemacs//company-active-navigation" to the hook
+  ;; "spacemacs-editing-style-hook", because this hook won't be executed when
+  ;; evil switch state between normal and emacs. The company mode must be
   ;; enabled globally, or function "spacemacs//company-active-navigation" can't
   ;; be called at here.
   (global-company-mode)
-  (spacemacs//company-active-navigation 'vim)
   (spacemacs//company-active-navigation 'emacs)
+  (define-key company-active-map (kbd "C-f") 'company-complete-selection)
   ;; Prevent the replaced text to be added to the kill ring, so that the copied
   ;; text can be used to replace other text multiple times.
   (setq evil-kill-on-visual-paste nil)
