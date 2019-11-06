@@ -15,11 +15,21 @@ def pudb_entry():
     sys.exit(main())
 
 
+def pugdb_entry():
+    from pudb.run import main
+    if (os.getenv('TMUX') is None):
+        sys.stderr.write('Error: "pugdb" must be executed inside "tmux".\n')
+        sys.exit(1)
+    os.system('tmux new-window -ad -n *PuGDB* gdb -ex c --pid %s' % os.getpid())
+    sys.exit(main())
+
+
 packages_info = {
     'pip'      : ['-m', 'pip'],
     'bpython'  : ['-m', 'bpython'],
     'ipython'  : ipython_entry,
     'pudb'     : pudb_entry,
+    'pugdb'    : pugdb_entry,
 }
 
 
