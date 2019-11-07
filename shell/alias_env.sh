@@ -42,3 +42,7 @@ setenv SHELL `sh_launcher pid-path $$ || which ${XSH}`
 # without any server side administrator configuration, so it need to be set by
 # shell self.
 setenv TERM xterm-256color
+# Set locale and language settings correctly, then shell will know how to show
+# the Non-ASCII characters.
+setenv LC_CTYPE en_US.UTF-8
+setenv LC_ALL en_US.UTF-8

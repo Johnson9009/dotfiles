@@ -72,9 +72,6 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-LC_CTYPE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
-
 # Setting the full path of our dotfiles directory automatically.
 # This script can be executed through 3 different ways.
 # - Executed directly by shell through symbolic link(e.g., ~/.zshrc -> zshrc)
