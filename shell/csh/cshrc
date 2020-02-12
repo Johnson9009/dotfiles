@@ -5,8 +5,6 @@ set color
 set complete = igncase
 set prompt = "%{\e[32;1m%}`hostname -s` %{\e[35;1m%}%c%{\e[0m%} "
 
-setenv GREP_OPTIONS "--color=auto"
-
 # Setting the full path of our dotfiles directory automatically.
 # This script can be executed through 3 different ways.
 # - Executed directly by shell through symbolic link(e.g., ~/.cshrc -> cshrc)

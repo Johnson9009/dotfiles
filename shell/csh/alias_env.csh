@@ -98,3 +98,5 @@ alias addenvfront 'test $?\!:1 != 1 && setenv \!:1 \!:2\: ||'\
                   'test $?\!:1 != 0 && setenv \!:1 \!:2\:`eval echo ${\!:1} | sed -e "s|\!:2\:||g"`'
 alias addenvback  'test $?\!:1 != 1 && setenv \!:1 :\!:2 ||'\
                   'test $?\!:1 != 0 && setenv \!:1 `eval echo ${\!:1} | sed -e "s|:\!:2||g"`:\!:2'
+
+alias grep grep --color=auto
