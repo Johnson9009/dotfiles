@@ -6,7 +6,7 @@
 # command `scp`, now only support the `-r` option of command `scp`, and `-r` can
 # appear at any position.
 download2client() {
-    client_destination_dir="${SSH_CLIENT%% *}:${1}"
+    client_destination_dir="${SSH_CONNECTION%% *}:${1}"
     # Remove the first argument "destination directory of ssh client machine".
     shift 1
 
@@ -30,7 +30,7 @@ download2client() {
 # directory through command `scp`, now only support the `-r` option of command
 # `scp`, and `-r` can appear at any position.
 upload2here() {
-    client_source_dir="${SSH_CLIENT%% *}:${1}"
+    client_source_dir="${SSH_CONNECTION%% *}:${1}"
     # Remove the first argument "source directory of ssh client machine".
     shift 1
 
