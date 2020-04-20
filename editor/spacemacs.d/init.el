@@ -51,6 +51,7 @@ values."
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      org
+     yaml
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
