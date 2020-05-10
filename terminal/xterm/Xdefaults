@@ -1,0 +1,60 @@
+! Set width of window.
+XTerm.VT100.geometry: 82
+
+! Set lines of text that you can scroll back.
+XTerm.VT100.saveLines: 10240
+XTerm.VT100.scrollBar: false
+! Avoid terminal output cause the scrollbar to go to the bottom automatically.
+XTerm.VT100.scrollTtyOutput: false
+! Pressing a key should cause the scrollbar to go to the bottom automatically.
+XTerm.VT100.scrollKey: true
+
+XTerm.VT100.faceName: Monaco for Powerline
+xterm*faceNameDoublesize: Noto Sans Mono CJK SC
+XTerm.VT100.faceSize: 14
+
+XTerm.VT100.cursorColor: #FFAF00
+XTerm.VT100.cursorBlink: true
+
+! Dracula theme.
+XTerm.VT100.foreground: #F8F8F2
+XTerm.VT100.background: #282A36
+XTerm.VT100.color0: #000000
+XTerm.VT100.color8: #4D4D4D
+XTerm.VT100.color1: #FF5555
+XTerm.VT100.color9: #FF6E67
+XTerm.VT100.color2: #50FA7B
+XTerm.VT100.color10: #5AF78E
+XTerm.VT100.color3: #F1FA8C
+XTerm.VT100.color11: #F4F99D
+XTerm.VT100.color4: #BD93F9
+XTerm.VT100.color12: #CAA9FA
+XTerm.VT100.color5: #FF79C6
+XTerm.VT100.color13: #FF92D0
+XTerm.VT100.color6: #8BE9FD
+XTerm.VT100.color14: #9AEDFE
+XTerm.VT100.color7: #BFBFBF
+XTerm.VT100.color15: #E6E6E6
+
+
+! Allow xterm to report the TERM environment variable correctly.
+! The terminal itself should report the correct TERM to the system so that the
+! proper terminfo file will be used.
+XTerm.termName: xterm-256color
+
+! The shell to be run in the window should be started as a login shell.
+XTerm.VT100.loginShell: true
+
+! Keybinding
+! Ctrl -: Make the font smaller.
+! Ctrl +: Make the font bigger.
+! Ctrl 0: Reset the font to the original size.
+! Shift Ctrl c: Copy the selected text to "CLIPBOARD".
+! Shift Ctrl v: Paste the content of "CLIPBOARD".
+XTerm.VT100.translations: #override \
+    Ctrl <Key> minus: smaller-vt-font() \n\
+    Ctrl <Key> plus: larger-vt-font() \n\
+    Ctrl <Key> 0: set-vt-font(d) \n\
+    \
+    Shift Ctrl <Key>C: copy-selection(CLIPBOARD) \n\
+    Shift Ctrl <Key>V: insert-selection(CLIPBOARD)

@@ -8,6 +8,7 @@
 ~/.config/xfce4/xfconf/xfce-perchannel-xml -> terminal/xfce4/xfconf/xfce-perchannel-xml
 ~/.mintty -> terminal/mintty
 ~/.minttyrc -> terminal/mintty/minttyrc
+~/.Xdefaults -> terminal/xterm/Xdefaults
 
 bin/emacsx ->
 bin/emacsclient ->
