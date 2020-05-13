@@ -400,9 +400,9 @@ you should place your code here."
   ;; Only highlight the lines longer than value of variable "fill-column".
   (setq whitespace-line-column nil)
   (setq whitespace-display-mappings
-        '((space-mark 32 [183]) ; 32 space, 183 middle dot「·」
-          (newline-mark 10 [182 10]) ; 10 newline, 182 pilcrow sign「¶」
-          (tab-mark 9 [8677 9]) ; 9 tab, 8677 rightwards arrow to bar「⇥」
+        '((space-mark 32 [183]) ; 32 space, 183 middle dot "·"
+          (newline-mark 10 [182 10]) ; 10 newline, 182 pilcrow sign "¶"
+          (tab-mark 9 [8677 9]) ; 9 tab, 8677 rightwards arrow to bar "⇥ "
           ))
   ;; Always delete and copy recursively in Dired mode.
   (setq dired-recursive-copies 'always)

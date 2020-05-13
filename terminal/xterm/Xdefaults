@@ -9,8 +9,8 @@ XTerm.VT100.scrollTtyOutput: false
 ! Pressing a key should cause the scrollbar to go to the bottom automatically.
 XTerm.VT100.scrollKey: true
 
-XTerm.VT100.faceName: Monaco for Powerline
-xterm*faceNameDoublesize: Noto Sans Mono CJK SC
+XTerm.VT100.faceName: Super Monaco
+XTerm.VT100.faceNameDoublesize: Noto Sans Mono CJK SC
 XTerm.VT100.faceSize: 14
 
 XTerm.VT100.cursorColor: #FFAF00
