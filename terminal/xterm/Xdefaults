@@ -42,6 +42,9 @@ XTerm.VT100.color15: #E6E6E6
 ! proper terminfo file will be used.
 XTerm.termName: xterm-256color
 
+! Locale and character set, it is so important for non-latin characters.
+XTerm.VT100.locale: en_US.UTF-8
+
 ! The shell to be run in the window should be started as a login shell.
 XTerm.VT100.loginShell: true
 
