@@ -41,10 +41,10 @@ XTerm.VT100.color15: #E6E6E6
 ! The terminal itself should report the correct TERM to the system so that the
 ! proper terminfo file will be used.
 XTerm.termName: xterm-256color
-
-! Locale and character set, it is so important for non-latin characters.
-XTerm.VT100.locale: en_US.UTF-8
-
+! Use the encoding specified by the users' LC_CTYPE locale (i.e., LC_ALL,
+! LC_CTYPE, or LANG variables), so any of these variables must be set correctly,
+! otherwise the non-latin characters can't be displayed correctly.
+XTerm.VT100.locale: true
 ! The shell to be run in the window should be started as a login shell.
 XTerm.VT100.loginShell: true
 
