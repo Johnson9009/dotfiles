@@ -1,3 +1,8 @@
+! Disable font sub-pixel rendering to avoid XTerm displaying big horizontal
+! spacing between two characters when use the "Super Monaco" font.
+Xft.rgba: none
+
+
 ! Set width of window.
 XTerm.VT100.geometry: 82
 
@@ -35,7 +40,6 @@ XTerm.VT100.color6: #8BE9FD
 XTerm.VT100.color14: #9AEDFE
 XTerm.VT100.color7: #BFBFBF
 XTerm.VT100.color15: #E6E6E6
-
 
 ! Allow xterm to report the TERM environment variable correctly.
 ! The terminal itself should report the correct TERM to the system so that the
