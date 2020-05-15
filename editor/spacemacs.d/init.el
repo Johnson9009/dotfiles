@@ -57,9 +57,6 @@ values."
             c-c++-enable-clang-support t)
      (python :variables
              python-fill-column 80)
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
      spell-checking
      syntax-checking
      ;; version-control
@@ -72,9 +69,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(evil-unimpaired
-                                    evil-ediff
-                                    clean-aindent-mode)
+   dotspacemacs-excluded-packages '(evil-ediff)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -366,7 +361,7 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "ESC <escape>") (kbd "<escape>"))
   ;; Change some leader key bindings.
   (spacemacs/set-leader-keys
-    "bk"  'kill-buffer-and-window
+    "bk"  'kill-buffer-and-none-sole-window
     "w-"  (split-and-focus-scratch below)
     "w/"  (split-and-focus-scratch right))
   ;; Mouse scrolling doesn't work when emacs is run in Mac OSX terminal. The
@@ -531,6 +526,14 @@ you should place your code here."
        (set-display-table-slot ,display-table 'wrap ?\↩)
        (set-display-table-slot ,display-table 'truncation ?\…)
        (set-display-table-slot ,display-table 'vertical-border ?\ǁ))))
+
+;; Delete the corresponding window when delete a buffer only if the window is
+;; is not a sole ordinary window.
+(defun kill-buffer-and-none-sole-window ()
+  (interactive)
+  (if (window-parent (selected-window))
+      (kill-buffer-and-window)
+    (kill-buffer)))
 
 (defun enter-emacs-state-and-set-mark (arg)
   "Enter \"evil-emacs-state\" firstly, and then set mark at the current
