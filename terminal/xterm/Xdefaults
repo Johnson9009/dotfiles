@@ -1,5 +1,9 @@
-! Disable font sub-pixel rendering to avoid XTerm displaying big horizontal
-! spacing between two characters when use the "Super Monaco" font.
+! With font hinting font will be displayed better, especially for CJK font.
+Xft.hinting: true
+! Set hintstyle to "hintslight" and disable font sub-pixel rendering to avoid
+! XTerm displaying big horizontal spacing between two characters when use the
+! "Super Monaco" font.
+Xft.hintstyle: hintslight
 Xft.rgba: none
 
 
