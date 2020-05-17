@@ -4,8 +4,7 @@
 ~/.gdbinit -> gdb/gdbinit
 ~/.zshrc -> shell/zsh/zshrc
 ~/.cshrc -> shell/csh/cshrc
-~/.config/xfce4/terminal -> terminal/xfce4/terminal
-~/.config/xfce4/xfconf/xfce-perchannel-xml -> terminal/xfce4/xfconf/xfce-perchannel-xml
+~/.config/xfce4/terminal/terminalrc -> terminal/xfce4-terminal/terminalrc
 ~/.mintty -> terminal/mintty
 ~/.minttyrc -> terminal/mintty/minttyrc
 ~/.Xdefaults -> terminal/xterm/Xdefaults
