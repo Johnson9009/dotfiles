@@ -36,6 +36,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     (spacemacs-navigation :packages (not ace-window))
      (ivy :variables
           ;; Ignore internal buffers in buffer switch.
           ivy-ignore-buffers '("\*.*" "magit[:-].*")
@@ -43,8 +44,13 @@ values."
           ;; is useful for the situations that need select directory, e.g.,
           ;; searching some text in all files under some directory recursively.
           ivy-extra-directories '("./"))
-     (auto-completion :variables
-                      auto-completion-tab-key-behavior 'nil)
+     (auto-completion :variables auto-completion-tab-key-behavior 'nil
+                      :packages (not auto-yasnippet
+                                     auto-complete
+                                     ac-ispell
+                                     ivy-yasnippet
+                                     yasnippet
+                                     yasnippet-snippets))
      better-defaults
      emacs-lisp
      git
