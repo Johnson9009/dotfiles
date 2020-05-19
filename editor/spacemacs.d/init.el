@@ -225,7 +225,12 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.0)
+
+   ;; GUI emacs use wave as the separator, on Mac the separators are less
+   ;; saturated than the rest of the spaceline. Using utf-8 separator makes it
+   ;; go away completely without the need to change color space.
+   dotspacemacs-mode-line-theme '(spacemacs :separator utf-8
+                                            :separator-scale 1.0)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -438,7 +443,8 @@ It should only modify the values of Spacemacs settings."
    ;; %F - frame name
    ;; %s - process status
    ;; %p - percent of buffer above top of window, or Top, Bot or All
-   ;; %P - percent of buffer above bottom of window, perhaps plus Top, or Bot or All
+   ;; %P - percent of buffer above bottom of window, perhaps plus Top, or Bot or
+   ;;      All
    ;; %m - mode name
    ;; %n - Narrow if appropriate
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
@@ -510,9 +516,6 @@ before packages are loaded."
     (kbd "C-n") (enter-emacs-state-and-move-line next))
   (define-key evil-normal-state-map
     (kbd "C-p") (enter-emacs-state-and-move-line previous))
-  (define-key evil-normal-state-map (kbd "C-@") 'enter-emacs-state-and-set-mark)
-  (define-key evil-normal-state-map
-    (kbd "C-SPC") 'enter-emacs-state-and-set-mark)
   ;; Swap key bindings of "p" and "P" and after pasting keep cursor to the end
   ;; of pasted text.
   (define-key evil-normal-state-map
@@ -648,12 +651,6 @@ before packages are loaded."
   (advice-add 'evil-set-cursor-color :after #'xterm-set-cursor-color)
   (advice-add 'delete-frame :before #'xterm-reset-cursor)
 
-  ;; Below settings only have effects for GUI emacs.
-
-  ;; GUI emacs use wave as the separator, on Mac the separators are less
-  ;; saturated than the rest of the spaceline. Using utf-8 separator makes it go
-  ;; away completely without the need to change color space.
-  (setq powerline-default-separator 'utf-8)
   ;; Set the highlight background of current line to black, this make selected
   ;; region become more distinct.
   (set-face-background 'hl-line "#000000")
@@ -714,13 +711,6 @@ before packages are loaded."
   (if (window-parent (selected-window))
       (kill-buffer-and-window)
     (kill-buffer)))
-
-(defun enter-emacs-state-and-set-mark (arg)
-  "Enter \"evil-emacs-state\" firstly, and then set mark at the current
-position of cursor."
-  (interactive "P")
-  (evil-emacs-state)
-  (set-mark-command arg))
 
 ;; Save user's current buffer if there are any changes.
 (defun save-user-current-buffer ()
