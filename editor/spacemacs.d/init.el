@@ -45,7 +45,10 @@ This function should only modify configuration layer settings."
           ;; Only ignore father dir(..) in "counsel find file", current dir(.)
           ;; is useful for the situations that need select directory, e.g.,
           ;; searching some text in all files under some directory recursively.
-          ivy-extra-directories '("./"))
+          ivy-extra-directories '("./")
+          ;; Ignore hidden files in "counsel find file" default, these files
+          ;; will appear unless we input "."
+          counsel-find-file-ignore-regexp "\\`\\.")
      (auto-completion :variables auto-completion-tab-key-behavior 'nil
                       :packages (not auto-yasnippet
                                      auto-complete
@@ -569,9 +572,6 @@ before packages are loaded."
                                             (forward-word (- arg))
                                             (point)))))
 
-  ;; Ignore hidden files in "counsel find file" default, these files will appear
-  ;; unless we input "."
-  (setq counsel-find-file-ignore-regexp "\\`\\.")
   ;; Use the input to replace the selected region.
   (delete-selection-mode 1)
   ;; Only highlight the lines longer than value of variable "fill-column".
