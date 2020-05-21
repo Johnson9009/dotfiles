@@ -38,7 +38,35 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     (spacemacs-navigation :packages (not ace-window))
+     (spacemacs-evil :packages (not evil-args
+                                    evil-cleverparens
+                                    evil-ediff
+                                    evil-goggles
+                                    evil-indent-plus
+                                    evil-lion
+                                    evil-lisp-state
+                                    evil-textobj-line
+                                    evil-unimpaired
+                                    evil-visual-mark-mode
+                                    evil-visualstar))
+     (spacemacs-editing :packages (not lorem-ipsum
+                                       move-text
+                                       password-generator))
+     (spacemacs-modeline :packages (not fancy-battery
+                                        font-lock+
+                                        spaceline-all-the-icons
+                                        symon))
+     (spacemacs-navigation :packages (not ace-window
+                                          centered-cursor-mode
+                                          paradox
+                                          restart-emacs))
+     (spacemacs-editing-visual :packages (not column-enforce-mode))
+     ;; The layers that are forced added in distribution `spacemacs' can still
+     ;; be removed through this tricky method.
+     (treemacs :packages nil)
+     (spacemacs-org :packages nil)
+     (spacemacs-language :packages nil)
+
      (ivy :variables
           ;; Ignore internal buffers in buffer switch.
           ivy-ignore-buffers '("\*.*" "magit[:-].*")
@@ -48,7 +76,8 @@ This function should only modify configuration layer settings."
           ivy-extra-directories '("./")
           ;; Ignore hidden files in "counsel find file" default, these files
           ;; will appear unless we input "."
-          counsel-find-file-ignore-regexp "\\`\\.")
+          counsel-find-file-ignore-regexp "\\`\\."
+          :packages (not helm-make))
      (auto-completion :variables auto-completion-tab-key-behavior 'nil
                       :packages (not auto-yasnippet
                                      auto-complete
@@ -57,20 +86,44 @@ This function should only modify configuration layer settings."
                                      yasnippet
                                      yasnippet-snippets))
      better-defaults
-     emacs-lisp
-     git
+     (emacs-lisp :packages (not flycheck-elsa
+                                flycheck-package
+                                nameless
+                                overseer
+                                emr))
+     (git :packages (not gitattributes-mode
+                         magit-gitflow
+                         magit-svn
+                         smeargle))
      (markdown :variables
-               markdown-live-preview-engine 'vmd)
-     org
+               markdown-live-preview-engine 'vmd
+               :packages (not gh-md))
      yaml
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
-            c-c++-enable-clang-support t)
+            c-c++-enable-clang-support t
+            :packages (not cpp-auto-include
+                           disaster
+                           google-c-style
+                           company-rtags
+                           flycheck-rtags
+                           ivy-rtags
+                           rtags
+                           company-ycmd
+                           flycheck-ycmd
+                           ycmd))
      (python :variables
-             python-fill-column 80)
+             python-fill-column 80
+             :packages (not importmagic
+                            live-py-mode
+                            pip-requirements
+                            pipenv
+                            pippel
+                            py-isort
+                            pyenv-mode
+                            pytest))
      spell-checking
      syntax-checking
-     ;; version-control
      )
 
    ;; List of additional packages that will be installed without being
@@ -86,7 +139,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(evil-ediff)
+   dotspacemacs-excluded-packages '()
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
