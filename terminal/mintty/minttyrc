@@ -1,6 +1,6 @@
 BoldAsFont=yes
 ThemeFile=dracula
-Font=Monaco for Powerline
+Font=Super Monaco
 FontHeight=14
 Locale=en_US
 Charset=UTF-8
