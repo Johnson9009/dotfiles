@@ -112,6 +112,7 @@ This function should only modify configuration layer settings."
                            company-ycmd
                            flycheck-ycmd
                            ycmd))
+     (cmake :packages (not cmake-ide))
      (python :variables
              python-fill-column 80
              :packages (not importmagic
@@ -133,7 +134,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(xclip)
+   dotspacemacs-additional-packages '(xclip toml-mode)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()

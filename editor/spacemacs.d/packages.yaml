@@ -1,309 +1,309 @@
 # 在help和info模式的时候比较有用,可以用字符选择进行打开链接,默认已经使能,可以通
 # 过o来激活.
-ace-link
+- ace-link
 # 自动的调整缩进,默认没有使能,按"space t I"打开.
-aggressive-indent
+- aggressive-indent
 # Python补全后端.
-anaconda-mode
+- anaconda-mode
 # modeline上显示搜索的部分如"(2/12)".
-anzu
+- anzu
 # 支持异步处理的库,Spacemacs底层依赖.
-async
+- async
 # 自动编译elisp,被emacs-lisp layer使用.
-auto-compile
+- auto-compile
 # 自动切换字典,被spell-checking layer使用,感觉目前因为一个变量没有enable.
-auto-dictionary
+- auto-dictionary
 # 自动高亮symbol,被spacemacs-navigation layer使用,如在vim模式下按*高亮.
-auto-highlight-symbol
+- auto-highlight-symbol
 # 以字母决策树的方式跳转, 被spacemacs-navigation layer使用,并且被很多别的库如
 # ace-link依赖,大量被space j下的快捷键绑定.
-avy
+- avy
 # keybinding, keymaps相关的,增强use-package使用方式,Spacemacs底层依赖.
-bind-key
-bind-map
+- bind-key
+- bind-map
 # 调用black对python文件进行format,被python layer使用,如果确定不用black(例如采用
 # yapf),那这个其实可以删掉.
-blacken
+- blacken
 # 调用clang-format工具对文件进行format,被c-c++ layer使用,默认已经使能,在c/c++文
 # 件时用“, =”就可以选择具体format.
-clang-format
+- clang-format
 # 自动删除由于自动对齐缩进添加的空白符,被spacemacs-editing layer使用,默认已使能,
 # 自动执行
-clean-aindent-mode
+- clean-aindent-mode
 # 自动补全前端,被auto-completion layer使用.
-company
+- company
 # company的anaconda后端,被python layer使用.
-company-anaconda
+- company-anaconda
 # company的c/c++ 头文件补全后端,被c-c++ layer使用.
-company-c-headers
+- company-c-headers
 # 被Ivy layer强烈使用,它和ivy以及swiper都是abo-abo大神在一个仓库里面的作品,可见
 # 他们三个紧密相连.
-counsel
+- counsel
 # 被ivy和spacemacs-layouts layer使用,主要还是ivy使用,它使用counsel给projectile提
 # 供了各种的用户交互.
-counsel-projectile
+- counsel-projectile
 # major mode for editing Cython files, used by python layer.
-cython-mode
+- cython-mode
 # 通用库,被大量其他库使用.
-dash
+- dash
 # 被spacemacs-misc layer使用,是一个很不错的API文档查询网站,尤其对网页前端开发人
 # 员来说,可以通过space h b d快速查询当前鼠标的symbol.
-devdocs
+- devdocs
 # 被spacemacs-bootstrap layer使用,mirror mode显示圆圈标识的底层支持.
-diminish
+- diminish
 # 被spacemacs-bootstrap layer使用,  编辑.env文件的时候的major mode.
-dotenv-mode
+- dotenv-mode
 # 被spacemacs-misc layer使用,是一个很不错的跳转库,由于快捷键冲突,现在大部分函数
 # 还没有被绑定快捷键,尤其是跳回来功能,真的很好.
-dumb-jump
+- dumb-jump
 # 被spacemacs-editing layer使用,著名的EditorConfig的emacs实现.
-editorconfig
+- editorconfig
 # 被emacs-lisp layer使用,elisp模式下“,g g”和“,g b”的主要支持.
-elisp-slime-nav
+- elisp-slime-nav
 # 被pkg-info包使用,是对package.el的包装,包管理底层工具.
-epl
+- epl
 # 被spacemacs-editing layer使用,但其实是emacs-lisp layer使用,用户在eval elisp代
 # 码的时候高亮闪一下被eval的代码.
-eval-sexp-fu
+- eval-sexp-fu
 # 被spacemacs-bootstrap layer使用, spacemacs的核心.
-evil
+- evil
 # 被spacemacs-evil layer使用,将evil的搜索结果通过anzu搞到mode line上.
-evil-anzu
+- evil-anzu
 # 被spacemacs-evil layer使用,通过快速按两个键(如fd)退出到evil-normal模式.
-evil-escape
+- evil-escape
 # 被spacemacs-evil layer使用,选中一个区域,然后gx,再选第二个,然后gx就把这两个交换
 # 了.
-evil-exchange
+- evil-exchange
 # 被spacemacs-evil layer使用,桥梁的角色,将evil,iedit和expand-region合理的结合在
 # 一起.
-evil-iedit-state
+- evil-iedit-state
 # 被spacemacs-evil layer使用,在visual state下按“i i”可以把与光标所在同一个缩进级
 # 别的行都选中.
 #evil-indent-plus, 留着注释用于理解text object
 # 被git layer使用,将evil的快捷键绑定到magit各个功能上,用evil的方式高效使用magit.
-evil-magit
+- evil-magit
 # 被spacemacs-evil layer使用,按“%”快速将光标跳的对应的tag上,比如跳到与当前"("对
 # 应的")".
-evil-matchit
+- evil-matchit
 # 被spacemacs-evil layer使用,"space ; ;"快速toggle注释的核心支持.
-evil-nerd-commenter
+- evil-nerd-commenter
 # 被spacemacs-evil layer使用,"space n ="就可以进入transient state对光标下的数字
 # 进行加减.
-evil-numbers
+- evil-numbers
 # 被spacemacs-evil layer使用,在visual state下按“s”然后接着输入"(",就可以将选中的
 # 区域用"()"包裹起来.
-evil-surround
+- evil-surround
 # 被spacemacs-evil layer使用,evil的tutorial,按"space h T v"进入.
-evil-tutor
+- evil-tutor
 # 被spacemacs-editing layer使用,按space v来非常高效快速智能的选中文本.
-expand-region
+- expand-region
 # 被spacemacs-layouts layer使用,用于管理workspace,spacemacs这部分功能极其混乱,等
 # 最后都把它干掉.
-eyebrowse
+- eyebrowse
 # 被大量包使用,文件和目录操作工具库.
-f
+- f
 # 被spacemacs-visual layer使用,显示竖向的对齐线,指示coder一行不要写的太长.
-fill-column-indicator
+- fill-column-indicator
 # 被ivy layer使用,其实主要是ivy包使用,是一个模糊匹配的底层引擎.
-flx
+- flx
 # ?
-flx-ido
+- flx-ido
 # 被syntax-checking等多个layer使用,实时check的核心.
-flycheck
+- flycheck
 # 被syntax-checking layer使用,在GUI下以tooltip的形式显示当前光标下的flycheck问
 # 题.
-flycheck-pos-tip
+- flycheck-pos-tip
 # 被spell-checking layer使用,可以为拼写错的地方提供更正功能.
-flyspell-correct
+- flyspell-correct
 # 被spell-checking layer使用,在更正的时候如果有多个可选值提供一个让用户选择的交
 # 互方式.
-flyspell-correct-ivy
+- flyspell-correct-ivy
 # ?
-fuzzy
+- fuzzy
 # 被git layer使用,是magit包的核心组成.
-git-commit
+- git-commit
 # 被git layer使用,用于编辑.gitconfig文件的major mode.
-gitconfig-mode
+- gitconfig-mode
 # 被git layer使用,用于编辑.gitignore这类文件的major mode.
-gitignore-mode
+- gitignore-mode
 # 被git layer使用,可以按"space g f i"来从http://www.gitignore.io中选择各种
 # template.
-gitignore-templates
+- gitignore-templates
 # 被git layer使用,可以获得当前行的github链接等.
-git-link
+- git-link
 # 被git layer使用,按"space g M"来popup last commit of current line.
-git-messenger
+- git-messenger
 # 被git layer使用,git 版本的Transient State核心.
-git-timemachine
+- git-timemachine
 # 被spacemacs-navigation layer使用,默认没有开启,按"space t g"开启,用来自动以黄金
 # 比例的方式调整各window的大小.
-golden-ratio
+- golden-ratio
 # 被evil包使用,但其实也在spacemacs-defaults layer中也有一个keybinding,按
 # "space j c"或在evil normal状态按"g ;"跳到上一个修改的地方.
-goto-chg
+- goto-chg
 # 被spacemacs-editing-visual layer使用,按"space t h i" 或"space t h c" 实现同一
 # 个缩进的列高亮.
-highlight-indentation
+- highlight-indentation
 # 被spacemacs-editing-visual layer使用,自动彩色高亮编程模式里面的数字.
-highlight-numbers
+- highlight-numbers
 # 被spacemacs-editing-visual layer使用,自动动态实时高亮包含光标的括号.
-highlight-parentheses
+- highlight-parentheses
 # 被spacemacs-visual layer使用,高亮彩色显示TODO,FIXME等关键字.
-hl-todo
+- hl-todo
 # 被spacemacs-editing layer使用,默认关闭,按"space t d"打开,一下backspace将连续的
 # 行空白都删掉.
-hungry-delete
+- hungry-delete
 # 被spacemacs-bootstrap layer使用,local的,hybrid模式的核心.
-hybrid-mode
+- hybrid-mode
 # 被spacemacs-bootstrap等多个包和layer使用,是transient state等那种小菜单的核心支
 # 持.
-hydra
+- hydra
 # 被evil-iedit-state包使用,是一个高效的多点编辑库.
-iedit
+- iedit
 # 被window-purpose包使用.
-imenu-list
+- imenu-list
 # 被spacemacs-editing-visual layer使用,默认关闭,按"space t i"打开缩进指导, 与上
 # 面highlight-indentation包不同的是线比较细而且会延时显示,这样在快速编辑的时候不
 # 会卡顿.
-indent-guide
+- indent-guide
 # 被ivy layer使用,智能补全交互的核心支持.
-ivy
+- ivy
 # 被ivy layer使用,在ivy一类的交互窗口通过C-o激活,用hydra包写的一个ivy各个函数的
 # hydra.
-ivy-hydra
+- ivy-hydra
 # 被spacemacs-purpose layer使用,将几个purpose切换buffer的函数remap成ivy包装的.
-ivy-purpose
+- ivy-purpose
 # 被ivy layer使用,用ivy来显示xref的结果.
-ivy-xref
+- ivy-xref
 # 被window-purpose和flycheck包使用,是一个宏用于简写代码.
-let-alist
+- let-alist
 # 被spacemacs-editing layer使用,按"space x o"可以调用浏览器打开链接,"space x y"
 # 复制链接.
-link-hint
+- link-hint
 # 被hydra包使用,在hydra仓库里.
-lv
+- lv
 # 被emacs-lisp layer使用,在elisp文件按", d m"进入transient state,按"e"可以把当前
 # 的宏内敛展开.
-macrostep
+- macrostep
 # 被git layer使用.
-magit
+- magit
 # 被git layer使用,实现了magit的UI.
-magit-section
+- magit-section
 # 被markdown layer使用.
-markdown-mode
+- markdown-mode
 # 被markdown layer使用,在markdown文件按", i t"可以生成markdown目录.
-markdown-toc
+- markdown-toc
 # 被markdown layer使用,可以实现让多个major mode共存于同一个buffer,是markdown显示
 # 各种语言代码片段的核心支持.
-mmm-mode
+- mmm-mode
 # 被themes-megapack layer使用.
-monokai-theme
+- monokai-theme
 # 被better-defaults layer使用,evil,emacs模式下"C-a"智能先跳到第一个字符前,再按一
 # 下跳到行首,以及emacs模式下的"C-e"功能.
-mwim
+- mwim
 # 被spacemacs-navigation layer使用,按"space f J"后只需输入文件后缀名就可以创建一
 # 个零时文件,不用想路径和名字也不同手动开mode.
-open-junk-file
+- open-junk-file
 # 被auto-compile包使用,通过分析包来获取一些包的元信息.
-packed
+- packed
 # 被highlight-numbers包使用,用于获得major mode的所有父mode.
-parent-mode
+- parent-mode
 # 被spacemacs-bootstrap layer使用,用于不同规范的正则表达式的转换.
-pcre2el
+- pcre2el
 # 被spacemacs-layouts layer使用,用于管理perspectives(layouts),spacemacs把这几个
 # 概念搞得无比混乱,而且目前发现它也无法实现隔离buffer的最基本功能,等之后把它们都
 # 干掉.
-persp-mode
+- persp-mode
 # 被projectile,flycheck包使用,用于从已经安装的包中获取信息.
-pkg-info
+- pkg-info
 # 被spacemacs-visual layer使用,但主要还是被git-messenger包使用,提供tooltip等弹窗
 # 功能.
-popup
+- popup
 # 被spacemacs-visual layer使用,是一个弹窗管理器,管理了很多内置的特殊功能buffer如
 # "*Help*", 但它管理不了popup的弹窗,popup有自己的丑陋交互,而且目前没人维护了.
-popwin
+- popwin
 # 被flycheck-pos-tip包使用,用于在当前光标位置显示tooltip,目前发现只能在GUI下使
 # 用.
-pos-tip
+- pos-tip
 # 被spaceline包使用.
-powerline
+- powerline
 # 被spacemacs-project layer使用.
-projectile
+- projectile
 # 被anaconda-mode包使用,提供了一些虚拟环境操作.
-pythonic
+- pythonic
 # 被python layer使用,在python文件按", v a"可以激活一个virtualenv.
-pyvenv
+- pyvenv
 # 被spacemacs-editing-visual layer使用,默认开启,按嵌套级别给分隔符如"("着色.
-rainbow-delimiters
+- rainbow-delimiters
 # 被spacemacs-misc layer和counsel包使用,是一个网络请求包,内部封装了curl等其他底
 # 层请求实现者.
-request
+- request
 # 被大量包使用,字符串操作工具包.
-s
+- s
 # 被spacemacs-editing layer使用,括号相关的智能编辑,输入"("的时候自动输入")"并将
 # 光标移到中间.
-smartparens
+- smartparens
 # 被ivy layer使用,也被counsel包可选使用,M-x的增强.
-smex
+- smex
 # 被spacemacs-modeline layer使用,Spacemacs modeline的核心支持.
-spaceline
+- spaceline
 # 被spacemacs-editing layer使用,按"space x i i"可以进入一个transient state,循环
 # 将光标下的文本在小写,大写,驼峰等变换.
-string-inflection
+- string-inflection
 # 被ivy layer使用,当前文件搜索核心.
-swiper
+- swiper
 # 被spacemacs-navigation layer使用,按"space s o"可以进入一个transient state,对当
 # 前光标下的symbol进行高亮,退出后高亮不会被清理,所以可以高亮多个symbol,每个
 # symbol的高亮颜色都不同,按"space s O"可以将所有高亮清空.
-symbol-overlay
+- symbol-overlay
 # 被git layer使用,实现了magit里面常用的在一个命令执行前加prefix,suffix的界面.
-transient
+- transient
 # 被spacemacs-editing layer使用,undo redo的核心支持,按"space a u"还可以进入可视
 # 化模式.
-undo-tree
+- undo-tree
 # 被better-defaults layer使用,是对emacs本身fill-paragraph(给一段文字自动折行)的
 # 增强,折行后还可以返过来.
-unfill
+- unfill
 # 被spacemacs-bootstrap layer使用,Spacemacs底层基础包,是一个用来简化包组织方式的
 # 宏.
-use-package
+- use-package
 # 被spacemacs-editing layer使用,按"space i U U"可以插入生成的UUID.
-uuidgen
+- uuidgen
 # 被writeroom-mode包使用,给emacs的visual-line-mode(以开启word-wrapping的方式将文
 # 本视觉折行,然后重新绑定C-a, C-e等快捷方式到视觉行上面而不是真正的逻辑行)然后实
 # 现了按照fill column折行的功能而不是非得到window边界折行.
-visual-fill-column
+- visual-fill-column
 # 被spacemacs-evil layer使用,模拟vim文件最后显示的"~".
-vi-tilde-fringe
+- vi-tilde-fringe
 # 被markdown layer使用,在markdown文件按", c P", 使用vmd工具来实时预览markdown文
 # 件.
-vmd-mode
+- vmd-mode
 # 被spacemacs-editing-visual layer使用,会将粘贴后的文本显示为选中的样子,提供一种
 # 视觉反馈,直到按下下一个键.
-volatile-highlights
+- volatile-highlights
 # 被ivy layer使用,用swiper或者search file搜出结果的界面按"C-c C-o"可以进入
 # ivy-occur buffer, 此时按"w"可以进入wgrep-mode,这时对搜索结果进行编辑然后按
 # ", c"可以将修改直接应用到原始文件中.
-wgrep
+- wgrep
 # 被spacemacs-bootstrap layer使用.
-which-key
+- which-key
 # 被spacemacs-purpose layer使用,用于给window加属性归类到不同的purpose,给window归
 # 类.
-window-purpose
+- window-purpose
 # 被spacemacs-navigation layer使用,为每个window加一个序号,按"space 3"直接跳到序
 # 号为3的window.
-winum
+- winum
 # 被git-commit, magit包使用,实现将当前emacs实例用作editor的功能.
-with-editor
+- with-editor
 # 被spacemacs-editing-visual layer使用,按"space w c c"可以进入写作模式,文字显示
 # 在屏幕中间,按"space w c ."可以进入一个transient state对文字显示区的宽窄进行调
 # 整.
-writeroom-mode
+- writeroom-mode
 # 被spacemacs-editing layer使用,自动将行尾的空白符去掉,只会处理编辑了的行.
-ws-butler
+- ws-butler
 # 自己添加,用于自动同步系统剪贴板和emacs剪贴板.
-xclip
+- xclip
 # 被yaml layer使用.
-yaml-mode
+- yaml-mode
 # 被python layer使用, 可以调用yapf对python文件进行格式化.
-yapfify
+- yapfify
