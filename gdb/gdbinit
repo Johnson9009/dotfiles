@@ -38,7 +38,6 @@
 #   Also added _member functions, that instead of printing the entire class in map, prints a member.
 
 
-
 #
 # std::vector<>
 #
@@ -105,6 +104,7 @@ document pvector
 	pvector v 1 2 - Prints elements in range [idx1..idx2] from vector
 end 
 
+
 #
 # std::list<>
 #
@@ -147,6 +147,7 @@ document plist
 	plist l int - prints all elements and list size
 	plist l int 2 - prints the third element in the list (if exists) and list size
 end
+
 
 define plist_member
 	if $argc == 0
@@ -481,7 +482,6 @@ document pset
 end
 
 
-
 #
 # std::dequeue
 #
@@ -525,7 +525,6 @@ document pdequeue
 end
 
 
-
 #
 # std::stack
 #
@@ -553,7 +552,6 @@ document pstack
 	Example:
 	pstack s - prints all elements and the size of s
 end
-
 
 
 #
@@ -585,7 +583,6 @@ document pqueue
 end
 
 
-
 #
 # std::priority_queue
 #
@@ -615,7 +612,6 @@ document ppqueue
 end
 
 
-
 #
 # std::bitset
 #
@@ -634,7 +630,6 @@ document pbitset
 	Example:
 	pbitset b - prints all bits in b
 end
-
 
 
 #
@@ -659,6 +654,7 @@ document pstring
 	pstring s - Prints content, size/length, capacity and ref-count of string s
 end 
 
+
 #
 # std::wstring
 #
@@ -679,24 +675,56 @@ document pwstring
 	Syntax: pwstring <wstring>
 	Example:
 	pwstring s - Prints content, size/length, capacity and ref-count of wstring s
-end 
+end
 
-#
-# C++ related beautifiers (optional)
-#
 
+# Print Settings
+#
+# Control GDB to print structures in an indented format with one member per
+# line, this setting has nothing to do with the "pretty-printers" which written
+# in Python and used to print the STL containers in a more human-readable
+# format, this setting only affect visualization of the data structures that
+# "pretty-printers" don't support.
 set print pretty on
+# When displaying a pointer to an object, identify the actual (derived) type of
+# the object rather than the declared type, using the virtual function table.
 set print object on
-set print static-members on
-set print vtbl on
-set print demangle on
-set demangle-style gnu-v3
-set print sevenbit-strings off
 
-##set follow-fork-mode child
-##set detach-on-fork off
 
+# Pretty Printing
+#
+# GDB provides a mechanism to allow pretty-printing of values using Python code,
+# and through the feature "auto-loading" to achieve automatically loading the
+# Python script when the corresponding object file is read.
+#
+# After reading a new object file, GDB will look for a file named
+# "${objfile}-gdb.${ext}", where "${objfile}" is the object file’s name that is
+# absolute, following all symlinks and "${ext}" is anyone of "gdb", "py" and
+# "scm", e.g., "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25-gdb.py". If this
+# file exists and is readable, GDB will evaluate it, if it doesn't exist, then
+# GDB will look for it in all of GDB auto-loaded scripts directories.
+#
+# The "pretty-printer" that installed through OS package manager almost always
+# will be placed inside directory "/usr/share/gdb/auto-load", and almost all of
+# the GDB that aren't installed through OS package manager don't include this
+# directory in its auto-loaded scripts directories by default. Generally this
+# directory is very useful for GDB pretty printing and commonly it is safe, so
+# here add it in auto-loaded scripts directories.
+add-auto-load-scripts-directory /usr/share/gdb/auto-load
+add-auto-load-safe-path /usr/share/gdb/auto-load
+
+
+# Load Local Initial File
+#
+# Load "~/.local.gdbinit" if it is exist, otherwise print a information message.
 python
 import os
-exec(open('%s/gdb/loadLocalInit.py' % os.environ['DOTFILES']).read())
+
+local_init = os.path.expanduser('~/.local.gdbinit')
+if os.path.isfile(local_init):
+  gdb.execute('source %s' % local_init)
+  print('The local initial file %s is loaded.' % local_init)
+else:
+  print('If the local initial file %s is exist, it will be loaded '
+        'automatically.' % local_init)
 end

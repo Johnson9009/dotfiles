@@ -1,0 +1,31 @@
+# Pretty Printing
+#
+# GDB provides a mechanism to allow pretty-printing of values using Python code,
+# and through the feature "auto-loading" to achieve automatically loading the
+# Python script when the corresponding object file is read.
+#
+# After reading a new object file, GDB will look for a file named
+# "${objfile}-gdb.${ext}", where "${objfile}" is the object file’s name that is
+# absolute, following all symlinks and "${ext}" is anyone of "gdb", "py" and
+# "scm", e.g., "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25-gdb.py". If this
+# file exists and is readable, GDB will evaluate it, if it doesn't exist, then
+# GDB will look for it in all of GDB auto-loaded scripts directories.
+#
+# 1. Object File Shipped With Auto-load "Pretty-Printer"
+# In this situation, the object that read by GDB has its "Pretty-Printer" script
+# and the script can be found and read by GDB automatically, then the only thing
+# that we need to do is telling GDB that the full path of the "Pretty-Printer"
+# script is safe.
+# add-auto-load-safe-path /opt/gcc-5.2.0/lib64/libstdc++.so.6.0.21-gdb.py
+#
+# 2. Object File Shipped With Manual-load "Pretty-Printer"
+# source /opt/src/llvm-7.0.0.src/utils/gdb-scripts/prettyprinters.py
+#
+# 3. Object File Shipped Without "Pretty-Printer"
+# In this situation, we can find a similar "Pretty-Printer" script and load it
+# manually.
+# python
+# import sys
+# sys.path.insert(0, "/opt/gcc-6.2.0/share/gcc-6.2.0/python")
+# exec(open('/opt/gcc-6.2.0/lib64/libstdc++.so.6.0.22-gdb.py').read())
+# end
