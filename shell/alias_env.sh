@@ -16,8 +16,6 @@ alias-it cdf cd '${DOTFILES}'
 alias-it cdws cd '${HOME}'/workspaces
 alias-it sudo sudo -H
 alias-it venv source '${DOTFILES}/venv/venv.${XSH}'
-alias-it ag ag --color-line-number=32 --color-path=35 --color-match='"1;31"'\
-            --nogroup
 alias-it rg rg --no-heading
 alias-it rgf rg --files -L -g
 
