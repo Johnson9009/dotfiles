@@ -1,0 +1,67 @@
+[core]
+	# Don't consider the bytes higher than 0x80 are "unusual" characters and don't
+	# escape them in the pathname, because they maybe valid UTF-8 characters,
+	# especially for non-English language, e.g., this option setting can make the
+	# commands like "git status" display Chinese correctly.
+	quotepath = false
+
+
+[diff]
+	# Tool that used by command "git difftool".
+	tool = vimdiff
+	# Tool that used by command "git difftool -g".
+	guitool = p4merge
+	# This option is added from version 2.11, before that the command "git diff"
+	# only highlight the carriage return(CR) on new added changes, in other words,
+	# if you change a file from Windows line endings "CR-LF" to Unix's "LF", then
+	# you can't see the deleted "CR" highlighted using command "git diff", you can
+	# only see all of the lines are removed and added back. Setting this option to
+	# "all" will tell the command "git diff" always highlight "CR".
+	wsErrorHighlight = all
+
+[difftool]
+	prompt = false
+	# The difftool invokes diff tool on all files one by one, if the current
+	# invoked diff tool returns a non-zero exit status, difftool will stop
+	# invoking diff tool on remaining files and exit immediately. Concrete diff
+	# tools haven't this option, so it only can be set at here.
+	trustExitCode = true
+
+# The command ":cq" can silently discards all unsaved changes and quits vim with
+# a non-zero exit status.
+[difftool "vimdiff"]
+	# Default "vimdiff" ignores the line endings difference, in other words, if
+	# you change a file from Windows line endings "CR-LF" to Unix's "LF",
+	# "vimdiff" will show you nothing different between the old and new file.
+	# Launching "vimdiff" using below command line will show the line endings
+	# difference correctly.
+	cmd = vim -d -c 'windo e! ++ff=unix' ${LOCAL} ${REMOTE}
+
+[difftool "p4merge"]
+	cmd = p4merge -da -le unix -C utf8 ${LOCAL} ${REMOTE}
+
+
+[merge]
+	# For merging there isn't any useful terminal merge tool, only some GUI merge
+	# tools maybe useful, here "guitool" won't be set and "tool" will be set to
+	# GUI merge tool, so that both "git mergetool" and "git mergetool -g" command
+	# can use it.
+	tool = p4merge
+
+[mergetool]
+	# Tell the command "git mergetool" to automatically remove the backup files as
+	# files are successfully merged.
+	keepBackup = false
+
+[mergetool "p4merge"]
+	cmd = p4merge -nb 'Common Base' -nl 'Theirs (Remote)' -nr 'Ours (Local)' -nm\
+        'Merge Result' -da -le unix -C utf8 ${BASE} ${REMOTE} ${LOCAL} ${MERGED}
+	# It is difficult for merge tool to reflect the merging result through exit
+	# status, so let the command "git mergetool" prompt the user to indicate the
+	# success of the merging resolution after the merge tool has exited.
+	trustExitCode = false
+
+
+[user]
+	name = Johnson Zhang
+	email = johnson9009@163.com

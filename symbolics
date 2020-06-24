@@ -1,6 +1,7 @@
 ~/.spacemacs.d -> editor/spacemacs.d
 ~/.tmux.conf -> tmux/tmux.conf
 ~/.vim -> editor/vim
+~/.gitconfig -> git/gitconfig
 ~/.gdbinit -> gdb/gdbinit
 ~/.zshrc -> shell/zsh/zshrc
 ~/.cshrc -> shell/csh/cshrc
@@ -33,5 +34,3 @@ bin/cmkr -> cmake/launcher.sh
 bin/cmkrd -> cmake/launcher.sh
 bin/cmkmr -> cmake/launcher.sh
 bin/cmkb -> cmake/launcher.sh
-
-bin/cmd_str-setenv2first_exist_cmd -> shell/launcher.sh
