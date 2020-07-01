@@ -30,6 +30,9 @@
 # 自动删除由于自动对齐缩进添加的空白符,被spacemacs-editing layer使用,默认已使能,
 # 自动执行
 - clean-aindent-mode
+# Used by cmake layer, providing only syntax highlighting and indentation for
+# CMakeLists.txt and *.cmake source files.
+- cmake-mode
 # 自动补全前端,被auto-completion layer使用.
 - company
 # company的anaconda后端,被python layer使用.
@@ -175,8 +178,6 @@
 - ivy-purpose
 # 被ivy layer使用,用ivy来显示xref的结果.
 - ivy-xref
-# 被window-purpose和flycheck包使用,是一个宏用于简写代码.
-- let-alist
 # 被spacemacs-editing layer使用,按"space x o"可以调用浏览器打开链接,"space x y"
 # 复制链接.
 - link-hint
@@ -256,6 +257,8 @@
 # 前光标下的symbol进行高亮,退出后高亮不会被清理,所以可以高亮多个symbol,每个
 # symbol的高亮颜色都不同,按"space s O"可以将所有高亮清空.
 - symbol-overlay
+# Used by rust layer, it is a major mode for editing TOML files.
+- toml-mode
 # 被git layer使用,实现了magit里面常用的在一个命令执行前加prefix,suffix的界面.
 - transient
 # 被spacemacs-editing layer使用,undo redo的核心支持,按"space a u"还可以进入可视
