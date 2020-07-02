@@ -6,8 +6,6 @@
 ~/.zshrc -> shell/zsh/zshrc
 ~/.cshrc -> shell/csh/cshrc
 ~/.config/xfce4/terminal/terminalrc -> terminal/xfce4-terminal/terminalrc
-~/.mintty -> terminal/mintty
-~/.minttyrc -> terminal/mintty/minttyrc
 ~/.Xdefaults -> terminal/xterm/Xdefaults
 
 bin/emacsx ->
