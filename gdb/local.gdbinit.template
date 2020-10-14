@@ -23,7 +23,11 @@
 #
 # 3. Object File Shipped Without "Pretty-Printer"
 # In this situation, we can find a similar "Pretty-Printer" script and load it
-# manually.
+# manually like previous situation.
+# For those complex "Pretty-Printer" scripts that implemented through multiple
+# Python files, e.g., the one of "libstdc++", directly evaluating them through
+# above command "source xxx" maybe meet Python "import" errors, if this is the
+# case, try to evaluate the "Pretty-Printer" scripts like below.
 # python
 # import sys
 # sys.path.insert(0, "/opt/gcc-6.2.0/share/gcc-6.2.0/python")
