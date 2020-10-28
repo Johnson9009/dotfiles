@@ -17,6 +17,13 @@ XTerm.VT100.scrollBar: false
 XTerm.VT100.scrollTtyOutput: false
 ! Pressing a key should cause the scrollbar to go to the bottom automatically.
 XTerm.VT100.scrollKey: true
+! XTerm maintains a table of all the ASCII characters and their classes, any
+! sequence of adjacent characters of the same class is treated as a word,
+! double-clicking will select the entire word around the pointer. The following
+! charClass string add characters #%&+,-./:=?@_~ to the same class of
+! numbers(0-9) and letters(A-Za-z), so that filenames, email addresses, URLs can
+! be selected as a word by double-clicking.
+XTerm.VT100.charClass: 35:48,37-38:48,43-47:48,58:48,61:48,63-64:48,95:48,126:48
 
 XTerm.VT100.faceName: Super Monaco
 XTerm.VT100.faceNameDoublesize: Noto Sans Mono CJK SC
