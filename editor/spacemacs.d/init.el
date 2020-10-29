@@ -704,6 +704,12 @@ before packages are loaded."
   (advice-add 'evil-set-cursor :after #'xterm-set-cursor-shape)
   (advice-add 'evil-set-cursor-color :after #'xterm-set-cursor-color)
   (advice-add 'delete-frame :before #'xterm-reset-cursor)
+  ;; When opening file with command like 'emacsclient -t -a "" a.txt' and
+  ;; closing the frame without killing the buffer, the shape and color of cursor
+  ;; won't be reset correctly, the reason is the functions "evil-set-cursor" and
+  ;; "evil-set-cursor-color" will be invoked by the function "delete-frame", so
+  ;; these functions need to be disabled temporarily when resetting the cursor.
+  (advice-add 'delete-frame :around #'with-set-cursor-disabled)
 
   ;; Set the highlight background of current line to black, this make selected
   ;; region become more distinct.
@@ -826,6 +832,21 @@ before packages are loaded."
   ;; Only continue when emacs or emacsclient is running in terminal.
   (unless (display-graphic-p)
     (send-to-terminal-twice "\e[5 q\e]12;#FFAF00\a")))
+
+(defun with-set-cursor-disabled (orig-fn &rest args)
+  "Disable cursor setting functions temporarily for function 'orig-fn'."
+  ;; Only execute when emacs or emacsclient is running in terminal.
+  (unless (display-graphic-p)
+    ;; Disable cursor setting functions.
+    (advice-remove 'evil-set-cursor #'xterm-set-cursor-shape)
+    (advice-remove 'evil-set-cursor-color #'xterm-set-cursor-color))
+  ;; Call the original function with argument list.
+  (apply orig-fn args)
+  ;; Only execute when emacs or emacsclient is running in terminal.
+  (unless (display-graphic-p)
+    ;; Enable cursor setting functions again.
+    (advice-add 'evil-set-cursor :after #'xterm-set-cursor-shape)
+    (advice-add 'evil-set-cursor-color :after #'xterm-set-cursor-color)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
