@@ -16,6 +16,17 @@
 # this.
 # env2cmd EDITOR em vim vi
 
+# Declare the xterm features supported by current terminal to the shell
+# environment variable "XTERM_FEATURES". Because for applications there isn't a
+# widely applicable method to get information of the remote terminal, so this
+# manually set shell environment variable is provided. Now only Emacs
+# configuration of this repository will use it.
+# The value should be composed of several strings which are separated by spaces,
+# and each string represents one kind of xterm feature, now only "DECSCUSR" and
+# "OSC12" are supported, so this environment variable can be set like something
+# below if your terminal support them all.
+# export XTERM_FEATURES="DECSCUSR OSC12"
+
 # Workaround to WSL's NTFS partitions permission issue.
 if [[ `uname -a` == *Microsoft* ]]; then
     DI_COLOR=`echo $LS_COLORS | sed -r 's/[^d]*di=([^:]*).*/\1/'`

@@ -701,15 +701,12 @@ before packages are loaded."
   ;; sequences. AFAIK, mintty, `Apple Terminal.app`(need plugin manager
   ;; `MacForge` to install plugin `MouseTerm plus`) and `Gnome Terminal` can
   ;; support them.
-  (advice-add 'evil-set-cursor :after #'xterm-set-cursor-shape)
-  (advice-add 'evil-set-cursor-color :after #'xterm-set-cursor-color)
-  (advice-add 'delete-frame :before #'xterm-reset-cursor)
-  ;; When opening file with command like 'emacsclient -t -a "" a.txt' and
-  ;; closing the frame without killing the buffer, the shape and color of cursor
-  ;; won't be reset correctly, the reason is the functions "evil-set-cursor" and
-  ;; "evil-set-cursor-color" will be invoked by the function "delete-frame", so
-  ;; these functions need to be disabled temporarily when resetting the cursor.
-  (advice-add 'delete-frame :around #'with-set-cursor-disabled)
+  (when (support-xterm-feature "DECSCUSR")
+    (advice-add 'evil-set-cursor :after #'xterm-set-cursor-shape)
+    (advice-add 'delete-frame :before #'xterm-reset-cursor-shape))
+  (when (support-xterm-feature "OSC12")
+    (advice-add 'evil-set-cursor-color :after #'xterm-set-cursor-color)
+    (advice-add 'delete-frame :before #'xterm-reset-cursor-color))
 
   ;; Set the highlight background of current line to black, this make selected
   ;; region become more distinct.
@@ -782,71 +779,106 @@ before packages are loaded."
 ;; Change cursor shape and color dynamically using xterm escape sequences when
 ;; emacs or emacsclient is running under terminal.
 
+;; Check if the current terminal support the given xterm feature, there isn't a
+;; widely applicable method to know information of the remote terminal, so this
+;; function just get them from the shell environment variable "XTERM_FEATURES".
+;; The value is composed of several strings which are separated by spaces, and
+;; each string represents one kind of xterm feature, now only "DECSCUSR" and
+;; "OSC12" are supported, so this environment variable can be set like something
+;; below if your terminal support them all.
+;;   export XTERM_FEATURES="DECSCUSR OSC12"
+(defun support-xterm-feature (feature)
+  "Check whether the environment variable ${XTERM_FEATURES} contains the given
+feature or not."
+  (let ((features (getenv "XTERM_FEATURES")))
+    (when features
+      (string-match-p (concat ".*" feature ".*") features))))
+
 (defun send-to-terminal-twice (seq)
   "Send escape sequence to terminal twice."
-  (when seq
-    (send-string-to-terminal seq)
-    ;; In case of the escape sequence lost or isn't processed completely by
-    ;; the terminal.
-    (send-string-to-terminal seq)))
+  ;; Only execute when emacs or emacsclient is running in terminal.
+  (unless (display-graphic-p)
+    (when seq
+      (send-string-to-terminal seq)
+      ;; In case of the escape sequence lost or isn't processed completely by
+      ;; the terminal.
+      (send-string-to-terminal seq))))
 
-;; Construct cursor shape setting escape sequence of xterm and send it to
-;; terminal according to the current value of `cursor-type`.
+;; Construct cursor shape setting escape sequence of xterm according to the
+;; current value of `cursor-type`and send it to terminal.
 (defun xterm-set-cursor-shape (&rest _)
   "Set cursor shape."
-  ;; Only continue when emacs or emacsclient is running in terminal.
-  (unless (display-graphic-p)
-    (let ((prefix     "\e[")
-          (suffix     " q")
-          (box-blink  "1")
-          (hbar-blink "3")
-          (bar-blink  "5")
-          (shape      nil)
-          (seq        nil))
-      (cond ((symbolp cursor-type)
-             (setq shape cursor-type))
-            ((listp cursor-type)
-             (setq shape (car cursor-type))))
-      (cond ((eq shape 'box)
-             (setq seq (concat prefix box-blink suffix)))
-            ((eq shape 'bar)
-             (setq seq (concat prefix bar-blink suffix)))
-            ((eq shape 'hbar)
-             (setq seq (concat prefix hbar-blink suffix))))
-      (send-to-terminal-twice seq))))
+  (let ((prefix     "\e[")
+        (suffix     " q")
+        (box-blink  "1")
+        (hbar-blink "3")
+        (bar-blink  "5")
+        (shape      nil)
+        (seq        nil))
+    (cond ((symbolp cursor-type)
+           (setq shape cursor-type))
+          ((listp cursor-type)
+           (setq shape (car cursor-type))))
+    (cond ((eq shape 'box)
+           (setq seq (concat prefix box-blink suffix)))
+          ((eq shape 'bar)
+           (setq seq (concat prefix bar-blink suffix)))
+          ((eq shape 'hbar)
+           (setq seq (concat prefix hbar-blink suffix))))
+    (send-to-terminal-twice seq)))
 
 ;; Construct cursor color setting escape sequence of xterm and send it to
 ;; terminal.
 (defun xterm-set-cursor-color (color &rest _)
   "Set cursor color."
-  ;; Only continue when emacs or emacsclient is running in terminal.
-  (unless (display-graphic-p)
-    (let ((hex-color (apply 'color-rgb-to-hex (color-name-to-rgb color))))
-      (if hex-color
-          (send-to-terminal-twice (concat "\e]12;" hex-color "\a"))))))
+  (let ((hex-color (apply 'color-rgb-to-hex (color-name-to-rgb color))))
+    (if hex-color
+        (send-to-terminal-twice (concat "\e]12;" hex-color "\a")))))
 
-;; Construct cursor shape and color resetting escape sequences of xterm and send
-;; it to terminal, reset the shape to blink bar and the color to light orange.
-(defun xterm-reset-cursor (&rest _)
+;; Construct cursor shape resetting escape sequences of xterm and send it to
+;; terminal, reset the shape to blink bar.
+(defun xterm-reset-cursor-shape (&rest _)
+  "Reset cursor shape."
+  (send-to-terminal-twice "\e[5 q"))
+
+;; Construct cursor color resetting escape sequences of xterm and send it to
+;; terminal, reset the color to light orange.
+(defun xterm-reset-cursor-color (&rest _)
   "Reset cursor shape and color."
-  ;; Only continue when emacs or emacsclient is running in terminal.
-  (unless (display-graphic-p)
-    (send-to-terminal-twice "\e[5 q\e]12;#FFAF00\a")))
+  (send-to-terminal-twice "\e]12;#FFAF00\a"))
+
+;; When opening file with command like 'emacsclient -t -a "" a.txt' and
+;; closing the frame without killing the buffer, the shape and color of cursor
+;; won't be reset correctly, the reason is the functions "evil-set-cursor" and
+;; "evil-set-cursor-color" will be invoked by the function "delete-frame", so
+;; these functions need to be disabled temporarily when resetting the cursor.
+(advice-add 'xterm-set-cursor-shape :around #'unless-set-cursor-disabled)
+(advice-add 'xterm-set-cursor-color :around #'unless-set-cursor-disabled)
+;; Wrap function "delete-frame" to set and unset the flag "set-cursor-disabled"
+;; before and after the location where it is called.
+(when (or (support-xterm-feature "DECSCUSR") (support-xterm-feature "OSC12"))
+  (advice-add 'delete-frame :around #'with-set-cursor-disabled))
+
+;; Execute the original function as long as the flag "set-cursor-disabled" is
+;; not set.
+(defun unless-set-cursor-disabled (orig-fn &rest args)
+  ;; Skip the invocation of the original function only if the variable
+  ;; "set-cursor-disabled" is defined and its value equals to "t".
+  (unless (and (boundp 'set-cursor-disabled) set-cursor-disabled)
+    ;; Call the original function with argument list.
+    (apply orig-fn args)))
 
 (defun with-set-cursor-disabled (orig-fn &rest args)
   "Disable cursor setting functions temporarily for function 'orig-fn'."
-  ;; Only execute when emacs or emacsclient is running in terminal.
-  (unless (display-graphic-p)
-    ;; Disable cursor setting functions.
-    (advice-remove 'evil-set-cursor #'xterm-set-cursor-shape)
-    (advice-remove 'evil-set-cursor-color #'xterm-set-cursor-color))
+  ;; Set the flag "set-cursor-disabled" to disable cursor setting functions,
+  ;; here the flag has better to be a local variable, but we found function
+  ;; "unless-set-cursor-disabled" can't access the local variable here, so the
+  ;; global variable is used.
+  (setq set-cursor-disabled t)
   ;; Call the original function with argument list.
   (apply orig-fn args)
-  ;; Only execute when emacs or emacsclient is running in terminal.
-  (unless (display-graphic-p)
-    ;; Enable cursor setting functions again.
-    (advice-add 'evil-set-cursor :after #'xterm-set-cursor-shape)
-    (advice-add 'evil-set-cursor-color :after #'xterm-set-cursor-color)))
+  ;; Unset the flag "set-cursor-disabled" by making the variable void.
+  (makunbound 'set-cursor-disabled))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
