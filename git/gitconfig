@@ -62,6 +62,13 @@
 	trustExitCode = false
 
 
+[stash]
+  # By default, executing the command "git stash show" without any options will
+  # only output the diffstat of the stash entry, this config variable setting
+  # adds the patch form of the stash entry into the output.
+  showPatch = true
+
+
 [user]
 	name = Johnson Zhang
 	email = johnson9009@163.com
