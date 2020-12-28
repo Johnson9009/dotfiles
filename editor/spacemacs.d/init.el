@@ -831,7 +831,8 @@ feature or not."
 ;; terminal.
 (defun xterm-set-cursor-color (color &rest _)
   "Set cursor color."
-  (let ((hex-color (apply 'color-rgb-to-hex (color-name-to-rgb color))))
+  (let ((hex-color (apply 'color-rgb-to-hex
+                          (append (color-name-to-rgb color) '(2)))))
     (if hex-color
         (send-to-terminal-twice (concat "\e]12;" hex-color "\a")))))
 
