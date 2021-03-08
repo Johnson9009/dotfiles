@@ -651,7 +651,8 @@ before packages are loaded."
   (setq mouse-wheel-scroll-amount '(1))
   ;; Use the default value of right margin(80), and turn it on for all text and
   ;; programming modes.
-  (spacemacs/add-to-hooks 'turn-on-fci-mode '(text-mode-hook prog-mode-hook))
+  (spacemacs/add-to-hooks 'spacemacs/toggle-fill-column-indicator
+                          '(text-mode-hook prog-mode-hook))
   ;; Save the current user buffer automatically when exit the evil emacs state.
   (add-hook 'evil-emacs-state-exit-hook 'save-user-current-buffer)
   ;; The priority of "buffer-display-table" is higher than it of
