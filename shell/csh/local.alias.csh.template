@@ -63,12 +63,14 @@
 # appear at any position.
 # alias u2h 'sh_launcher upload2here /xxx/Downloads'
 
-# Mac OS
+# macOS
 #
-# The behavior of `ls` and `rm` of Mac OS are different from that of GNU core
-# utilities', the color of Mac OS's `ls` and GNU core utilities' `ls` is
-# different, the Mac OS's `rm` don't support specifying options behind the
-# positional argument, e.g., `rm test_dir -rf`. GNU core utilities can be
-# installed through command `brew install coreutils`.
+# The command "rm" and "ls" of macOS are different from those of GNU core
+# utilities, the command "rm" of macOS doesn't support specifying options behind
+# the positional argument, e.g., "rm test_dir -rf", for the command "ls" the
+# difference is only in color.
+# GNU core utilities can be installed through command "brew install coreutils",
+# in default the commands also provided by macOS have been installed with the
+# prefix "g", i.e., "grm" is the GNU core utilities version of command "rm".
 # alias ls 'gls --color=tty'
 # alias rm 'grm'
