@@ -17,7 +17,7 @@ alias-it cdws cd '${HOME}'/workspaces
 alias-it sudo sudo -H
 alias-it venv source '${DOTFILES}/venv/venv.${XSH}'
 alias-it rg rg --no-heading
-alias-it rgf rg --files -L -g
+alias-it rgf rg --no-messages --no-ignore --files -L -g
 
 
 # 2. Environment Variables
